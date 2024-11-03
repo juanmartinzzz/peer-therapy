@@ -20,8 +20,9 @@ const Sessions = () => {
         <div className="flex center padding-top-bottom-md">
           <div className="text size-xxl">Sessions</div>
         </div>
-        <SessionList sessions={sessions} />
+
         {/* <div className="text size-xs"><pre>{JSON.stringify(sessions, null, 2)}</pre></div> */}
+        <SessionList sessions={sessions} />
       </div>
 
       <div className="flex center padding-md">
