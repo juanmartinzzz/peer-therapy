@@ -4,6 +4,7 @@ import Button from "../form/Button";
 import DateInput from "../form/DateInput";
 import SelectInput from "../form/SelectInput";
 import TextInput from "../form/TextInput";
+import SessionName from "./SessionName";
 
 const NewSessionForm = ({session, setSession, setShowNewSessionForm}) => {
   return (
@@ -17,7 +18,7 @@ const NewSessionForm = ({session, setSession, setShowNewSessionForm}) => {
 
         <div>
           <div className="text size-md">Session name preview:</div>
-          <div className="text size-xl">{`${session.date.getFullYear()} ${['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][session.date.getUTCMonth()]} ${session.date.getUTCDate()} @ ${session.location.hostCompanyName} - ${session.location.city}`}</div>
+          <SessionName session={session} />
         </div>
 
         <div>
