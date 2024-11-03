@@ -1,0 +1,171 @@
+@import url('https://fonts.googleapis.com/css2?family=Homenaje&display=swap');
+
+/* Quick CSS reset rules */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* theme */
+:root {
+  --palette-1: #ffe281;
+  --palette-2: #94dfff;
+  --palette-3: #90ffae;
+  --palette-4: #E7BEE9;
+  --palette-5: #F2D7D7;
+
+  --palette-1: #ffc09f;
+  --palette-2: #ffee93;
+  --palette-3: #fcf5c7;
+  --palette-4: #a0ced9;
+  --palette-5: #adf7b6;
+
+  --palette-1: #809bce;
+  --palette-2: #95b8d1;
+  --palette-3: #b8e0d2;
+  --palette-4: #d6eadf;
+  --palette-5: #eac4d5;
+
+  --palette-1: #e8dff5;
+  --palette-2: #fce1e4;
+  --palette-3: #fcf4dd;
+  --palette-4: #ddedea;
+  --palette-5: #daeaf6;
+
+  --palette-action: #008cff;
+  --palette-action-hover: #0077e6;
+  --palette-action-active: #0063cc;
+
+  --grayscale-0: #ffffff;
+  --grayscale-1: #f9fafb;
+  --grayscale-2: #f3f4f6;
+  --grayscale-3: #e5e7eb;
+  --grayscale-4: #d1d5db;
+  --grayscale-5: #9ca3af;
+  --grayscale-6: #4b5563;
+  --grayscale-7: #374151;
+  --grayscale-8: #1f2937;
+  --grayscale-9: #000000;
+}
+
+/* body */
+body {
+  font-family: 'Homenaje', sans-serif;
+  background-color: var(--grayscale-0);
+}
+
+/* layout */
+.flex {
+  display: flex;
+}
+.flex.column {
+  flex-direction: column;
+}
+.flex.center {
+  justify-content: center;
+  align-items: center;
+}
+.flex.space-between { justify-content: space-between; }
+.flex.wrap { flex-wrap: wrap; }
+.flex.gap-xxs { gap: 4px; }
+.flex.gap-xs { gap: 8px; }
+.flex.gap-sm { gap: 16px; }
+.flex.gap-md { gap: 32px; }
+.flex.gap-lg { gap: 64px; }
+.flex.gap-xl { gap: 128px; }
+.padding-xxs { padding: 4px; }
+.padding-xs { padding: 8px; }
+.padding-sm { padding: 16px; }
+.padding-md { padding: 32px; }
+.padding-lg { padding: 64px; }
+.padding-xl { padding: 128px; }
+.padding-top-bottom-xs { padding: 8px 0; }
+.padding-top-bottom-sm { padding: 16px 0; }
+.padding-top-bottom-md { padding: 32px 0; }
+.padding-top-bottom-lg { padding: 64px 0; }
+.padding-top-bottom-xl { padding: 128px 0; }
+.padding-left-right-xs { padding: 0 8px; }
+.padding-left-right-sm { padding: 0 16px; }
+.padding-left-right-md { padding: 0 32px; }
+.padding-left-right-lg { padding: 0 64px; }
+.padding-left-right-xl { padding: 0 128px; }
+.width-xs { width: 8%; }
+.width-sm { width: 16%; }
+.width-md { width: 32%; }
+.width-lg { width: 64%; }
+.width-xl { width: 96%; }
+.width-full { width: 100%; }
+
+/* form */
+.text-input {
+  border: 1px solid var(--grayscale-6);
+  border-radius: 2px;
+}
+.action-element {
+  cursor: pointer;
+  background-color: var(--palette-action);
+  color: var(--grayscale-0);
+}
+.action-element:hover {
+  background-color: var(--palette-action-hover);
+}
+.action-element:active {
+  background-color: var(--palette-action-active);
+}
+
+/* circle */
+.circle {
+  border-radius: 50%;
+}
+.circle.size-xs { width: 16px; height: 16px; }
+.circle.size-sm { width: 32px; height: 32px; }
+.circle.size-md { width: 64px; height: 64px; }
+.circle.size-lg { width: 128px; height: 128px; }
+.circle.size-xl { width: 256px; height: 256px; }
+
+/* card */
+.card {
+  border-radius: 4px;
+  border: 1px solid #ffffff;
+}
+.card:nth-child(5n+1) {
+  background-color: var(--palette-1);
+}
+.card:nth-child(5n+2) {
+  background-color: var(--palette-2);
+}
+.card:nth-child(5n+3) {
+  background-color: var(--palette-3);
+}
+.card:nth-child(5n+4) {
+  background-color: var(--palette-4);
+}
+.card:nth-child(5n) {
+  background-color: var(--palette-5);
+}
+
+/* typography */
+.text.size-xxxs { font-size: 8px; }
+.text.size-xxs { font-size: 10px; }
+.text.size-xs { font-size: 12px; }
+.text.size-sm { font-size: 14px; }
+.text.size-md { font-size: 16px; }
+.text.size-lg { font-size: 20px; }
+.text.size-xl { font-size: 24px; }
+.text.size-xxl { font-size: 32px; }
+.text.size-xxxl { font-size: 48px; }
+.text.center { text-align: center; }
+.text.line-height-xxxs { line-height: 0.6em; }
+.text.line-height-xxs { line-height: 0.8em; }
+.text.line-height-xs { line-height: 1em; }
+.text.line-height-sm { line-height: 1.2em; }
+.text.line-height-md { line-height: 1.4em; }
+.text.line-height-lg { line-height: 1.8em; }
+.text.line-height-xl { line-height: 2.4em; }
+
+/* test */
+.test {
+  border: 2px dotted red;
+  background-color: rgba(70, 70, 70, 0.3);
+}
