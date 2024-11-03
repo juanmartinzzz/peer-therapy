@@ -1,7 +1,8 @@
 import './App.css';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import auth from './data/auth';
 import Home from './components/home/Home';
 import Sessions from './components/sessions/Sessions';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 // create 2 basic routes
 const router = createBrowserRouter([
@@ -10,6 +11,8 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
+  // auth.getUser();
+
   return (
     // Load the routes using react-router-dom
     <RouterProvider router={router} />

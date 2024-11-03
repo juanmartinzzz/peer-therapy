@@ -2,15 +2,25 @@ import { cities } from "./enums";
 
 const locationTemplate = {
   nickname: '',
-  hostCompanyName: 'Acme Inc.',
   city: cities.montreal,
+  hostCompanyName: 'Acme Inc.',
 };
 
 const sessionTemplate = {
   nickname: '',
   date: new Date(),
-  location: locationTemplate,
   isCompleted: false,
+  location: locationTemplate,
 };
 
-export { locationTemplate, sessionTemplate };
+const userTemplate = {
+  id: '',
+  name: '',
+  email: '',
+  industry: '',
+  sessions: [],
+  companyName: '',
+  city: cities.montreal,
+};
+
+export { locationTemplate, sessionTemplate, userTemplate };
