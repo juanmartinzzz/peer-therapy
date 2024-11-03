@@ -1,8 +1,17 @@
 import { db } from "../integrations/firebase";
 import { sessionTemplate } from "./entities";
-import { addDoc, collection, onSnapshot, query } from "firebase/firestore";
+import { addDoc, collection, doc, onSnapshot, query, setDoc } from "firebase/firestore";
 
-const addDocumentWithDefaultFields = async ({collectionName, data}) => {
+const updateDocumentWithDefaultFields = async ({docRef, data}) => {
+  const dataToAdd = {
+    ...data,
+    updatedAt: new Date(),
+  }
+
+  setDoc(docRef, dataToAdd);
+}
+
+const addDocumentWithDefaultFields = async ({collectionName, data, id}) => {
 
   const dataToAdd = {
     ...data,
@@ -11,10 +20,26 @@ const addDocumentWithDefaultFields = async ({collectionName, data}) => {
   }
 
   try {
-    await addDoc(collection(db, collectionName), dataToAdd);
+    if(id) {
+      setDoc(doc(collection(db, collectionName), id), dataToAdd);
+    } else {
+      await addDoc(collection(db, collectionName), dataToAdd);
+    }
   } catch (error) {
     console.error("Error adding document: ", error);
   }
+}
+
+const updateUser = async ({user}) => {
+  user.sessions.map(sessionId => {
+    const docRef = doc(collection(db, `sessions/${sessionId}/participants`), user.id);
+
+    updateDocumentWithDefaultFields({docRef, data: user});
+  });
+}
+
+const addUserToSession = async ({sessionId, user}) => {
+  await addDocumentWithDefaultFields({collectionName: `sessions/${sessionId}/participants`, data: user, id: user.id});
 }
 
 const setCallbackOnQuerySnapshot = async ({query, callback}) => {
@@ -41,4 +66,9 @@ const onSessionsChange = async ({callback}) => {
   }});
 }
 
-export { createSession, onSessionsChange };
+export {
+  updateUser,
+  createSession,
+  onSessionsChange,
+  addUserToSession,
+};
