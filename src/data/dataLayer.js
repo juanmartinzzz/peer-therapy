@@ -45,6 +45,12 @@ const addDocumentWithDefaultFields = async ({collectionName, data, id}) => {
 
 // data methods
 
+const onGroupsChange = async ({sessionId, callback}) => {
+  const q = query(collection(db, `sessions/${sessionId}/groups`));
+
+  setCallbackOnQuerySnapshot({query: q, callback});
+}
+
 const onParticipantsChange = async ({sessionId, callback}) => {
   const q = query(collection(db, `sessions/${sessionId}/participants`));
 
@@ -79,6 +85,7 @@ const onSessionsChange = async ({callback}) => {
 export {
   updateUser,
   createSession,
+  onGroupsChange,
   onSessionsChange,
   addUserToSession,
   onParticipantsChange,

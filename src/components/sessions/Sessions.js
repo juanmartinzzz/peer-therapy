@@ -18,11 +18,11 @@ const Sessions = () => {
     <div>
       <div className="flex column gap-sm padding-left-right-sm">
         <div className="flex center padding-top-bottom-md">
-          <div className="text size-xxl">Sessions</div>
+          <div className="text size-xxl">Manage Sessions & Groups</div>
         </div>
 
         {/* <div className="text size-xs"><pre>{JSON.stringify(sessions, null, 2)}</pre></div> */}
-        <SessionList sessions={sessions} />
+        <SessionList sessions={sessions} isAdmin={true} />
       </div>
 
       <div className="flex center padding-md">

@@ -1,5 +1,15 @@
 import { userTemplate } from "./entities";
 
+const isAdmin = () => {
+  // If the window location includes /ubq6nqwo4nd7a3infg
+  return window.location.pathname.includes('/ubq6nqwo4nd7a3infg');
+}
+
+const isModerator = () => {
+  // If the window location includes /74m92rfp07uc43kjj
+  return window.location.pathname.includes('/74m92rfp07uc43kjj');
+}
+
 const getUser = () => {
   const user = JSON.parse(localStorage.getItem("user"));
 
@@ -36,7 +46,9 @@ const updateUser = ({user}) => {
 
 const auth = {
   getUser,
+  isAdmin,
   updateUser,
+  isModerator,
   addSessionToUser,
 };
 

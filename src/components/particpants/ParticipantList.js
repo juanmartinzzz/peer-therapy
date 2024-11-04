@@ -10,7 +10,7 @@ const ParticipantList = ({session}) => {
 
   return (
     <>
-      <div className="flex center text size-lg">{participants.length} participant{participants.length !== 1 && 's'}</div>
+      <div className="flex center text size-xl">{participants.length} participant{participants.length !== 1 && 's'}</div>
       <div className="flex column gap-xs">
         {participants.sort((a, b) => a.name.localeCompare(b.name)).map(participant => {
           return (
