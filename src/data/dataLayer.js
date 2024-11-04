@@ -2,6 +2,19 @@ import { db } from "../integrations/firebase";
 import { sessionTemplate } from "./entities";
 import { addDoc, collection, doc, onSnapshot, query, setDoc } from "firebase/firestore";
 
+// helpers
+
+const setCallbackOnQuerySnapshot = async ({query, callback}) => {
+  const unsubscribe = onSnapshot(query, querySnapshot => {
+    const documents = [];
+    querySnapshot.forEach(doc => {
+        documents.push({...doc.data(), id: doc.id});
+    });
+
+    callback({documents});
+  });
+}
+
 const updateDocumentWithDefaultFields = async ({docRef, data}) => {
   const dataToAdd = {
     ...data,
@@ -30,6 +43,14 @@ const addDocumentWithDefaultFields = async ({collectionName, data, id}) => {
   }
 }
 
+// data methods
+
+const onParticipantsChange = async ({sessionId, callback}) => {
+  const q = query(collection(db, `sessions/${sessionId}/participants`));
+
+  setCallbackOnQuerySnapshot({query: q, callback});
+}
+
 const updateUser = async ({user}) => {
   user.sessions.map(sessionId => {
     const docRef = doc(collection(db, `sessions/${sessionId}/participants`), user.id);
@@ -40,17 +61,6 @@ const updateUser = async ({user}) => {
 
 const addUserToSession = async ({sessionId, user}) => {
   await addDocumentWithDefaultFields({collectionName: `sessions/${sessionId}/participants`, data: user, id: user.id});
-}
-
-const setCallbackOnQuerySnapshot = async ({query, callback}) => {
-  const unsubscribe = onSnapshot(query, querySnapshot => {
-    const documents = [];
-    querySnapshot.forEach(doc => {
-        documents.push({...doc.data(), id: doc.id});
-    });
-
-    callback({documents});
-  });
 }
 
 const createSession = async ({ session = sessionTemplate }) => {
@@ -71,4 +81,5 @@ export {
   createSession,
   onSessionsChange,
   addUserToSession,
+  onParticipantsChange,
 };

@@ -66,6 +66,7 @@ body {
   justify-content: center;
   align-items: center;
 }
+.flex.center-vertical { align-items: center; }
 .flex.space-between { justify-content: space-between; }
 .flex.wrap { flex-wrap: wrap; }
 .flex.gap-xxs { gap: 4px; }

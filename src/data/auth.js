@@ -29,7 +29,9 @@ const addSessionToUser = ({sessionId}) => {
 }
 
 const updateUser = ({user}) => {
-  localStorage.setItem("user", JSON.stringify(user));
+  const userFromLocalStorage = JSON.parse(localStorage.getItem("user"));
+  const updatedUser = {...userFromLocalStorage, ...user};
+  localStorage.setItem("user", JSON.stringify(updatedUser));
 }
 
 const auth = {

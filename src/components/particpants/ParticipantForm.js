@@ -5,8 +5,13 @@ import { useState } from "react";
 import { updateUser } from "../../data/dataLayer";
 
 const saveUser = async ({user}) => {
+  // Since sessions are not set in this form, we do not want them to override existing sessions
+  delete user.sessions;
+  // TODO: change this logic to: remove any properties not set in this form
+
   auth.updateUser({user});
-  await updateUser({user});
+  const updatedUser = auth.getUser();
+  await updateUser({user: updatedUser});
 }
 
 const ParticipantForm = ({}) => {
