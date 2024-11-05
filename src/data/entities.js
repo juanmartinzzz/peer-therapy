@@ -1,4 +1,12 @@
-import { cities } from "./enums";
+import { cities, emojis } from "./enums";
+
+const groupTemplate = {
+  id: '',
+  name: '',
+  emoji: '',
+  sessionId: '',
+  emoji: emojis[Object.keys(emojis)[Math.floor(Math.random() * Object.keys(emojis).length)]]
+};
 
 const locationTemplate = {
   nickname: '',
@@ -23,4 +31,4 @@ const userTemplate = {
   city: cities.montreal,
 };
 
-export { locationTemplate, sessionTemplate, userTemplate };
+export { locationTemplate, sessionTemplate, userTemplate, groupTemplate };

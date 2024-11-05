@@ -1,3 +1,44 @@
+// A map of words to funny emojis
+const emojis = {
+  rocket: '🚀',
+  laptop: '💻',
+  fire: '🔥',
+  snow: '❄️',
+  popcorn: '🍿',
+  theater: '🎭',
+  target: '🎯',
+  love: '❤️‍🔥',
+  warning: '⚠️',
+  announcement: '📢',
+  flag: '🚩',
+  angry: '🤬',
+  tool: '🛠️',
+  trophy: '🏆',
+  star: '⭐️',
+  party: '🎉',
+  construction: '🚧',
+  ghost: '👻',
+  sparkle: '✨',
+  music: '🎵',
+  heart: '🫀',
+  hat: '🎩',
+  scarf: '🧣',
+  crown: '👑',
+  apple: '🍎',
+  banana: '🍌',
+  orange: '🍊',
+  lemon: '🍋',
+  pineapple: '🍍',
+  strawberry: '🍓',
+  watermelon: '🍉',
+  dog: '🐶',
+  cat: '🐱',
+  mouse: '🐭',
+  rabbit: '🐰',
+  bear: '🐻',
+  panda: '🐼',
+};
+
 const cities = {
   ottawa: 'Ottawa',
   toronto: 'Toronto',
@@ -8,4 +49,4 @@ const cities = {
   losAngeles: 'Los Angeles',
 };
 
-export { cities };
+export { cities, emojis };

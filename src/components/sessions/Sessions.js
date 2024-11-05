@@ -1,4 +1,5 @@
 
+import auth from "../../data/auth";
 import SessionList from "./SessionList";
 import NewSessionForm from "./NewSessionForm";
 import { useEffect, useState } from "react";
@@ -25,11 +26,15 @@ const Sessions = () => {
         <SessionList sessions={sessions} isAdmin={true} />
       </div>
 
-      <div className="flex center padding-md">
-        <div className="flex center circle size-lg action-element" onClick={() => setShowNewSessionForm(true)}>
-          <div className="text size-xxl line-height-xxs center">n<br/>e<br/>w</div>
+      {auth.isAdmin() && (
+        <div>
+          <div className="flex center padding-md">
+            <div className="flex center circle size-lg action-element" onClick={() => setShowNewSessionForm(true)}>
+              <div className="text size-xxl line-height-xxs center">n<br/>e<br/>w</div>
+            </div>
+          </div>
         </div>
-      </div>
+      )}
 
       {showNewSessionForm && <NewSessionForm session={session} setSession={setSession} setShowNewSessionForm={setShowNewSessionForm} />}
     </div>

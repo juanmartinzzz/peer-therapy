@@ -166,6 +166,22 @@ body {
 .text.line-height-lg { line-height: 1.8em; }
 .text.line-height-xl { line-height: 2.4em; }
 
+/* emoji */
+.emojiInput:hover .emojiPicker {
+  display: flex;
+}
+.emojiPicker {
+  display: none;
+  width: 320px;
+  position: relative;
+}
+.emojiOption {
+  cursor: pointer;
+}
+.emojiOption:hover {
+  background-color: rgb(255, 255, 255);
+}
+
 /* test */
 .test {
   border: 2px dotted red;

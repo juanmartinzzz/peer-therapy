@@ -24,7 +24,6 @@ const Home = () => {
       <div className="padding-top-bottom-md">
         <ParticipantForm />
       </div>
-
     </div>
     );
 };

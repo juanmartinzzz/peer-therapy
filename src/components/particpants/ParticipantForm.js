@@ -29,7 +29,7 @@ const ParticipantForm = ({}) => {
 
       <div>
         <Button onClick={() => saveUser({user})}>
-          <div className="text size-xxl">save info</div>
+          <div className="text size-xxl">Save info</div>
         </Button>
       </div>
     </div>

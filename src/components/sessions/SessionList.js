@@ -4,6 +4,8 @@ import GroupList from "../groups/GroupList";
 import ParticipantList from "../particpants/ParticipantList";
 import { addUserToSession } from "../../data/dataLayer";
 import { Fragment, useState } from "react";
+import GroupForm from "../groups/GroupForm";
+import SessionGroups from "../groups/SessionGroups";
 
 const joinSession = ({session, userSessions, setUserSessions}) => {
   // Add the session ID to the user's sessions list
@@ -37,15 +39,17 @@ const SessionList = ({sessions}) => {
               <div className="padding-left-right-sm">
                 {auth.isAdmin() && (
                   <div className="padding-top-bottom-sm">
-                    <GroupList session={session} />
+                    <SessionGroups session={session} />
                   </div>
                 )}
 
                 <ParticipantList session={session} />
 
                 {auth.isAdmin() && (
-                  <div className="flex center">
-                    <div className="text size-md action-element padding-sm">Randomly assign participants to groups</div>
+                  <div>
+                    <div className="flex center">
+                      <div className="text size-md action-element padding-sm">Randomly assign participants to groups</div>
+                    </div>
                   </div>
                 )}
               </div>

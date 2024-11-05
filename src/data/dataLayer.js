@@ -1,6 +1,6 @@
 import { db } from "../integrations/firebase";
 import { sessionTemplate } from "./entities";
-import { addDoc, collection, doc, onSnapshot, query, setDoc } from "firebase/firestore";
+import { addDoc, collection, collectionGroup, doc, onSnapshot, query, setDoc, where } from "firebase/firestore";
 
 // helpers
 
@@ -15,13 +15,13 @@ const setCallbackOnQuerySnapshot = async ({query, callback}) => {
   });
 }
 
-const updateDocumentWithDefaultFields = async ({docRef, data}) => {
+const updateDocumentWithDefaultFields = async ({docRef, data, merge = true}) => {
   const dataToAdd = {
     ...data,
     updatedAt: new Date(),
   }
 
-  setDoc(docRef, dataToAdd);
+  setDoc(docRef, dataToAdd, {merge});
 }
 
 const addDocumentWithDefaultFields = async ({collectionName, data, id}) => {
@@ -33,10 +33,15 @@ const addDocumentWithDefaultFields = async ({collectionName, data, id}) => {
   }
 
   try {
+    console.log({collectionName, dataToAdd, id});
     if(id) {
-      setDoc(doc(collection(db, collectionName), id), dataToAdd);
+      const docRef = await setDoc(doc(collection(db, collectionName), id), dataToAdd);
+
+      return docRef;
     } else {
-      await addDoc(collection(db, collectionName), dataToAdd);
+      const docRef = await addDoc(collection(db, collectionName), dataToAdd);
+
+      return docRef;
     }
   } catch (error) {
     console.error("Error adding document: ", error);
@@ -49,6 +54,18 @@ const onGroupsChange = async ({sessionId, callback}) => {
   const q = query(collection(db, `sessions/${sessionId}/groups`));
 
   setCallbackOnQuerySnapshot({query: q, callback});
+}
+
+const updateGroup = async ({group}) => {
+  if(group.id) {
+    updateDocumentWithDefaultFields({docRef: doc(collection(db, `sessions/${group.sessionId}/groups`), group.id), data: group});
+
+    return group.id;
+  }
+
+  const docRef = await addDocumentWithDefaultFields({collectionName: `sessions/${group.sessionId}/groups`, data: group});
+
+  return docRef.id;
 }
 
 const onParticipantsChange = async ({sessionId, callback}) => {
@@ -70,7 +87,6 @@ const addUserToSession = async ({sessionId, user}) => {
 }
 
 const createSession = async ({ session = sessionTemplate }) => {
-  console.log({session});
   addDocumentWithDefaultFields({ collectionName: 'sessions', data: session });
 }
 
@@ -84,6 +100,7 @@ const onSessionsChange = async ({callback}) => {
 
 export {
   updateUser,
+  updateGroup,
   createSession,
   onGroupsChange,
   onSessionsChange,
