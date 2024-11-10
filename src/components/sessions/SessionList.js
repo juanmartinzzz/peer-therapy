@@ -1,11 +1,8 @@
 import auth from "../../data/auth";
-import SessionName from "./SessionName";
-import GroupList from "../groups/GroupList";
-import ParticipantList from "../particpants/ParticipantList";
-import { addUserToSession } from "../../data/dataLayer";
+import SessionTitle from "./SessionTitle";
 import { Fragment, useState } from "react";
-import GroupForm from "../groups/GroupForm";
-import SessionGroups from "../groups/SessionGroups";
+import { addUserToSession } from "../../data/dataLayer";
+import SessionGroupsAndParticipants from "./SessionGroupsAndParticipants";
 
 const joinSession = ({session, userSessions, setUserSessions}) => {
   // Add the session ID to the user's sessions list
@@ -29,13 +26,13 @@ const SessionList = ({sessions}) => {
 
         return (
           <Fragment key={session.id}>
-            <div className="card padding-sm flex space-between" key={session.id} onClick={onClick}>
-              <SessionName session={session} />
-              {shouldShowJoinButton && <div className="text size-xs action-element padding-xs">Join</div>}
-              {session.isCompleted && <div className="text size-xs highlight padding-xs">Ended</div>}
-            </div>
+            <SessionTitle session={session} shouldShowJoinButton={shouldShowJoinButton} onClick={onClick} />
 
             {!session.isCompleted && (
+              <SessionGroupsAndParticipants session={session} />
+            )}
+
+            {/* {!session.isCompleted && (
               <div className="padding-left-right-sm">
                 {auth.isAdmin() && (
                   <div className="padding-top-bottom-sm">
@@ -53,7 +50,7 @@ const SessionList = ({sessions}) => {
                   </div>
                 )}
               </div>
-            )}
+            )} */}
           </Fragment>
         );
       })}

@@ -1,11 +1,10 @@
 import './App.css';
-import Home from './components/home/Home';
 import Sessions from './components/sessions/Sessions';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 // create 2 basic routes
 const router = createBrowserRouter([
-  { path: '/', element: <Home /> },
+  { path: '/', element: <Sessions /> },
   { path: '/ubq6nqwo4nd7a3infg', element: <Sessions /> },
 ]);
 

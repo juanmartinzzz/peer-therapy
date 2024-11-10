@@ -50,6 +50,16 @@ const addDocumentWithDefaultFields = async ({collectionName, data, id}) => {
 
 // data methods
 
+const updateParticipantGroup = async ({participant, group}) => {
+  const docRef = doc(collection(db, `sessions/${group.sessionId}/participants`), participant.id);
+  await setDoc(docRef, {...participant, groupId: group.id});
+}
+
+const updateGroupParticipants = async ({group, participants}) => {
+  const docRef = doc(collection(db, `sessions/${group.sessionId}/groups`), group.id);
+  await setDoc(docRef, {...group, participantIds: participants.map(participant => participant.id)});
+}
+
 const onGroupsChange = async ({sessionId, callback}) => {
   const q = query(collection(db, `sessions/${sessionId}/groups`));
 
@@ -106,4 +116,6 @@ export {
   onSessionsChange,
   addUserToSession,
   onParticipantsChange,
+  updateParticipantGroup,
+  updateGroupParticipants,
 };

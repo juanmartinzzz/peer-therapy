@@ -1,12 +1,9 @@
-import { useEffect, useState } from "react";
-import { onParticipantsChange } from "../../data/dataLayer";
+const ParticipantList = ({participants}) => {
+  // const [participants, setParticipants] = useState([]);
 
-const ParticipantList = ({session}) => {
-  const [participants, setParticipants] = useState([]);
-
-  useEffect(() => {
-    onParticipantsChange({sessionId: session.id, callback: ({documents}) => setParticipants(documents)});
-  }, []);
+  // useEffect(() => {
+  //   onParticipantsChange({sessionId: session.id, callback: ({documents}) => setParticipants(documents)});
+  // }, []);
 
   return (
     <>
@@ -17,6 +14,7 @@ const ParticipantList = ({session}) => {
             <div className="flex gap-xs center-vertical" key={participant.id}>
               <div className="text size-xl">{participant.name}</div>
               <div className="text size-md">({participant.industry} {participant.companyName && `- ${participant.companyName}`})</div>
+              <div className="text size-md">({participant.groupId && participant.groupId})</div>
             </div>
           );
         })}
