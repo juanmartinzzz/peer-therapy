@@ -11,6 +11,11 @@ node_modules# See https://help.github.com/articles/ignoring-files/ for more abou
 # production
 /build
 
+# firebase
+firebase.json
+.firebaserc
+.firebase
+
 # environment
 .env
 .env.local

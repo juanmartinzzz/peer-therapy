@@ -37,7 +37,7 @@ const SessionGroupsAndParticipants = ({session}) => {
     <>
       {auth.isAdmin() && <SessionGroups session={session} groups={groups} />}
 
-      <ParticipantList participants={participants} />
+      <ParticipantList participants={participants} groups={groups} />
 
       {auth.isAdmin() && (
         <div>

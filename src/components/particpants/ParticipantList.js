@@ -1,10 +1,6 @@
-const ParticipantList = ({participants}) => {
-  // const [participants, setParticipants] = useState([]);
+const getGroup = ({groupId, groups}) => groups.find(group => group.id === groupId);
 
-  // useEffect(() => {
-  //   onParticipantsChange({sessionId: session.id, callback: ({documents}) => setParticipants(documents)});
-  // }, []);
-
+const ParticipantList = ({participants, groups}) => {
   return (
     <>
       <div className="flex center text size-xl">{participants.length} participant{participants.length !== 1 && 's'}</div>
@@ -14,7 +10,7 @@ const ParticipantList = ({participants}) => {
             <div className="flex gap-xs center-vertical" key={participant.id}>
               <div className="text size-xl">{participant.name}</div>
               <div className="text size-md">({participant.industry} {participant.companyName && `- ${participant.companyName}`})</div>
-              <div className="text size-md">({participant.groupId && participant.groupId})</div>
+              <div className="text size-md">({getGroup({groupId: participant.groupId, groups})?.name})</div>
             </div>
           );
         })}
