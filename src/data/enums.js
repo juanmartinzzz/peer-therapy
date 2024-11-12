@@ -1,5 +1,27 @@
+const requestStatuses = {
+  editing: 'editing',
+  reviewed: 'reviewed',
+  submitted: 'submitted',
+  discussing: 'discussing',
+};
+
+// A map of words to emojis showing human emotions
+const requestEmojis = {
+  sad: '😔',
+  hot: '🔥',
+  cold: '🥶',
+  sick: '🤒',
+  happy: '😊',
+  angry: '🤬',
+  tired: '💤',
+  hungry: '🍴',
+  excited: '🤩',
+  thirsty: '💧',
+  confused: '🤔',
+};
+
 // A map of words to funny emojis
-const emojis = {
+const groupEmojis = {
   rocket: '🚀',
   laptop: '💻',
   fire: '🔥',
@@ -49,4 +71,4 @@ const cities = {
   losAngeles: 'Los Angeles',
 };
 
-export { cities, emojis };
+export { cities, groupEmojis, requestStatuses };

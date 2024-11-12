@@ -1,4 +1,5 @@
 import './App.css';
+import Group from './components/groups/Group';
 import Sessions from './components/sessions/Sessions';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
@@ -6,6 +7,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 const router = createBrowserRouter([
   { path: '/', element: <Sessions /> },
   { path: '/ubq6nqwo4nd7a3infg', element: <Sessions /> },
+  { path: '/group/:sessionId', element: <Group /> },
 ]);
 
 function App() {

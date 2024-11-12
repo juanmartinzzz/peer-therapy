@@ -10,6 +10,9 @@ const isModerator = () => {
   return window.location.pathname.includes('/74m92rfp07uc43kjj');
 }
 
+/**
+ * @returns {userTemplate}
+ */
 const getUser = () => {
   const user = JSON.parse(localStorage.getItem("user"));
 

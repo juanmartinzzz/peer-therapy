@@ -1,11 +1,20 @@
-import { cities, emojis } from "./enums";
+import { cities, groupEmojis, requestStatuses } from "./enums";
+
+const requestTemplate = {
+  id: '',
+  groupId: '',
+  sessionId: '',
+  participantId: '',
+  emotionalState: '',
+  emotionalStateEmoji: '',
+  status: requestStatuses.editing,
+};
 
 const groupTemplate = {
   id: '',
   name: '',
-  emoji: '',
   sessionId: '',
-  emoji: emojis[Object.keys(emojis)[Math.floor(Math.random() * Object.keys(emojis).length)]]
+  emoji: groupEmojis[Object.keys(groupEmojis)[Math.floor(Math.random() * Object.keys(groupEmojis).length)]],
 };
 
 const locationTemplate = {
@@ -31,4 +40,10 @@ const userTemplate = {
   city: cities.montreal,
 };
 
-export { locationTemplate, sessionTemplate, userTemplate, groupTemplate };
+export {
+  userTemplate,
+  groupTemplate,
+  sessionTemplate,
+  requestTemplate,
+  locationTemplate,
+};

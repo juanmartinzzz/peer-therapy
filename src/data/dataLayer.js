@@ -1,6 +1,6 @@
 import { db } from "../integrations/firebase";
 import { sessionTemplate } from "./entities";
-import { addDoc, collection, collectionGroup, doc, onSnapshot, query, setDoc, where } from "firebase/firestore";
+import { addDoc, collection, collectionGroup, doc, getDocs, onSnapshot, query, setDoc, where } from "firebase/firestore";
 
 // helpers
 
@@ -13,6 +13,28 @@ const setCallbackOnQuerySnapshot = async ({query, callback}) => {
 
     callback({documents});
   });
+}
+
+const addOrUpdateDocument = async ({collectionName, data, id}) => {
+  const dataToAdd = {
+    createdAt: new Date(),
+    ...data,
+    updatedAt: new Date(),
+  }
+
+  try {
+    if(id) {
+      const docRef = await setDoc(doc(collection(db, collectionName), id), dataToAdd);
+
+      return docRef;
+    } else {
+      const docRef = await addDoc(collection(db, collectionName), dataToAdd);
+
+      return docRef;
+    }
+  } catch (error) {
+    console.error("Error adding document: ", error);
+  }
 }
 
 const updateDocumentWithDefaultFields = async ({docRef, data, merge = true}) => {
@@ -50,6 +72,17 @@ const addDocumentWithDefaultFields = async ({collectionName, data, id}) => {
 
 // data methods
 
+const request = {
+  onRequestsChange: async ({sessionId, groupId, callback}) => {
+    const q = query(collection(db, `sessions/${sessionId}/groups/${groupId}/requests`));
+
+    setCallbackOnQuerySnapshot({query: q, callback});
+  },
+  addOrUpdate: async ({request}) => {
+    addOrUpdateDocument({collectionName: `sessions/${request.sessionId}/groups/${request.groupId}/requests`, data: request, id: request.id});
+  }
+}
+
 const updateParticipantGroup = async ({participant, group}) => {
   const docRef = doc(collection(db, `sessions/${group.sessionId}/participants`), participant.id);
   await setDoc(docRef, {...participant, groupId: group.id});
@@ -58,6 +91,14 @@ const updateParticipantGroup = async ({participant, group}) => {
 const updateGroupParticipants = async ({group, participants}) => {
   const docRef = doc(collection(db, `sessions/${group.sessionId}/groups`), group.id);
   await setDoc(docRef, {...group, participantIds: participants.map(participant => participant.id)});
+}
+
+const group = {
+  onGroupsChange: async ({sessionId, callback}) => {
+    const q = query(collection(db, `sessions/${sessionId}/groups`));
+
+    setCallbackOnQuerySnapshot({query: q, callback});
+  }
 }
 
 const onGroupsChange = async ({sessionId, callback}) => {
@@ -76,6 +117,14 @@ const updateGroup = async ({group}) => {
   const docRef = await addDocumentWithDefaultFields({collectionName: `sessions/${group.sessionId}/groups`, data: group});
 
   return docRef.id;
+}
+
+const participant = {
+  onParticipantsChange: async ({sessionId, callback}) => {
+    const q = query(collection(db, `sessions/${sessionId}/participants`));
+
+    setCallbackOnQuerySnapshot({query: q, callback});
+  }
 }
 
 const onParticipantsChange = async ({sessionId, callback}) => {
@@ -108,7 +157,14 @@ const onSessionsChange = async ({callback}) => {
   }});
 }
 
+const dataLayer = {
+  group,
+  request,
+  participant,
+}
+
 export {
+  dataLayer,
   updateUser,
   updateGroup,
   createSession,
