@@ -71,4 +71,4 @@ const cities = {
   losAngeles: 'Los Angeles',
 };
 
-export { cities, groupEmojis, requestStatuses };
+export { cities, groupEmojis, requestEmojis, requestStatuses };

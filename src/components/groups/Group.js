@@ -8,9 +8,10 @@ const getParticipant = ({participants, id}) => participants.find(participant => 
 
 const Group = () => {
   const user = auth.getUser();
-  const { sessionId } = useParams();
+  const { sessionId, groupId } = useParams();
   const [group, setGroup] = useState({});
-  const [groups, setGroups] = useState([]);
+  const [session, setSession] = useState({});
+  // const [groups, setGroups] = useState([]);
   const [requests, setRequests] = useState([]);
   const [participants, setParticipants] = useState([]);
 
@@ -18,37 +19,42 @@ const Group = () => {
   const participantsInGroup = participants.filter(participant => group.participantIds.includes(participant.id));
 
   useEffect(() => {
-    dataLayer.group.onGroupsChange({sessionId, callback: ({documents}) => {
-      const group = documents.find(group => group.participantIds.includes(user.id));
-      setGroup(group);
-      setGroups(documents);
-      dataLayer.request.onRequestsChange({sessionId, groupId: group.id, callback: ({documents}) => setRequests(documents)});
+    dataLayer.session.onSessionsChange({sessionId, callback: ({documents}) => {
+      setSession(documents.find(session => session.id === sessionId));
     }});
+    dataLayer.group.onGroupsChange({sessionId, callback: ({documents}) => {
+      setGroup(documents.find(group => group.id === groupId));
+    }});
+    dataLayer.request.onRequestsChange({sessionId, groupId, callback: ({documents}) => setRequests(documents)});
     dataLayer.participant.onParticipantsChange({sessionId, callback: ({documents}) => setParticipants(documents)});
   }, []);
 
   return (
     <>
-      <div className="flex center padding-top-bottom-md">
-        <div className="text size-xxl">{group.name}</div>
+      <div className="flex column center padding-top-bottom-md">
+        <div className="text size-lg">Session at {session.location.hostCompanyName}</div>
+        <div className="flex center gap-xs">
+          <div className="text size-lg">Group</div>
+          <div className="text size-xxl">{group.name}</div>
+        </div>
       </div>
 
-      <div className="flex column">
-        {participantsInGroup.map(participant => (
-          <div className="padding-sm" key={participant.id}>
-            <div>{participant.name}</div>
-          </div>
-        ))}
+      <div className="flex gap-sm padding-left-right-sm">
+        Participants:{participantsInGroup.map(participant => <div className="text size-md" key={participant.id}>{participant.name}</div>)}
       </div>
 
       {requests.map(request => (
         <div className="padding-sm" key={request.id}>
           <div className="text size-md">Request from: {getParticipant({participants, id: request.participantId}).name}</div>
-          <div className="text size-sm">{request.emotionalState} - {request.status}</div>
+          <div className="text size-sm">{request.emotionalStateEmoji} ({request.emotionalState})</div>
+          <div className="text size-sm">{request.requestToGroup}</div>
+          <div className="text size-sm">{request.context}</div>
         </div>
       ))}
 
-      <RequestForm participantRequest={requests[0]} />
+      <div className="card padding-top-bottom-md padding-left-right-sm">
+        <RequestForm participantRequest={requests[0]} />
+      </div>
     </>
   );
 }

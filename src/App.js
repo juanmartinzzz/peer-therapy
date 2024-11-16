@@ -7,7 +7,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 const router = createBrowserRouter([
   { path: '/', element: <Sessions /> },
   { path: '/ubq6nqwo4nd7a3infg', element: <Sessions /> },
-  { path: '/group/:sessionId', element: <Group /> },
+  { path: '/group/:sessionId/:groupId', element: <Group /> },
 ]);
 
 function App() {

@@ -3,10 +3,12 @@ import { cities, groupEmojis, requestStatuses } from "./enums";
 const requestTemplate = {
   id: '',
   groupId: '',
+  context: '',
   sessionId: '',
   participantId: '',
   emotionalState: '',
   emotionalStateEmoji: '',
+  requestToGroup: '',
   status: requestStatuses.editing,
 };
 

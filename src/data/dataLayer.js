@@ -145,6 +145,16 @@ const addUserToSession = async ({sessionId, user}) => {
   await addDocumentWithDefaultFields({collectionName: `sessions/${sessionId}/participants`, data: user, id: user.id});
 }
 
+const session = {
+  onSessionsChange: async ({callback}) => {
+    const q = query(collection(db, "sessions"));
+
+    setCallbackOnQuerySnapshot({query: q, callback: ({documents}) => {
+      callback({documents: documents.map(document => ({...document, date: new Date(document.date.seconds * 1000)}))})
+    }});
+  }
+}
+
 const createSession = async ({ session = sessionTemplate }) => {
   addDocumentWithDefaultFields({ collectionName: 'sessions', data: session });
 }
@@ -160,6 +170,7 @@ const onSessionsChange = async ({callback}) => {
 const dataLayer = {
   group,
   request,
+  session,
   participant,
 }
 
