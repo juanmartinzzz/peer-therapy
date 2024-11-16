@@ -32,7 +32,7 @@ const Group = () => {
   return (
     <>
       <div className="flex column center padding-top-bottom-md">
-        <div className="text size-lg">Session at {session.location.hostCompanyName}</div>
+        <div className="text size-lg">Session at {session.location && session.location.hostCompanyName}</div>
         <div className="flex center gap-xs">
           <div className="text size-lg">Group</div>
           <div className="text size-xxl">{group.name}</div>
@@ -43,14 +43,17 @@ const Group = () => {
         Participants:{participantsInGroup.map(participant => <div className="text size-md" key={participant.id}>{participant.name}</div>)}
       </div>
 
-      {requests.map(request => (
-        <div className="padding-sm" key={request.id}>
-          <div className="text size-md">Request from: {getParticipant({participants, id: request.participantId}).name}</div>
-          <div className="text size-sm">{request.emotionalStateEmoji} ({request.emotionalState})</div>
-          <div className="text size-sm">{request.requestToGroup}</div>
-          <div className="text size-sm">{request.context}</div>
-        </div>
-      ))}
+      <div className="padding-sm">
+        <div className="text size-lg">Requests</div>
+        {requests.map(request => (
+          <div key={request.id}>
+            <div className="text size-md">Request from: {getParticipant({participants, id: request.participantId}).name}</div>
+            <div className="text size-sm">{request.emotionalStateEmoji} ({request.emotionalState})</div>
+            <div className="text size-sm">{request.requestToGroup}</div>
+            <div className="text size-sm">{request.context}</div>
+          </div>
+        ))}
+      </div>
 
       <div className="card padding-top-bottom-md padding-left-right-sm">
         <RequestForm participantRequest={requests[0]} />
