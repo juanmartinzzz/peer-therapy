@@ -31,7 +31,7 @@ const Sessions = () => {
           <div className="text size-xxl">Sessions & Groups</div>
         </div>
 
-        <SessionList sessions={sessions} isAdmin={true} />
+        <SessionList sessions={sessions} />
       </div>
 
       {auth.isAdmin() && (

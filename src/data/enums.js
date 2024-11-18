@@ -1,3 +1,9 @@
+const modalFormPositions = {
+  top: 'top',
+  bottom: 'bottom',
+  center: 'center',
+};
+
 const requestStatuses = {
   editing: 'editing',
   reviewed: 'reviewed',
@@ -71,4 +77,4 @@ const cities = {
   losAngeles: 'Los Angeles',
 };
 
-export { cities, groupEmojis, requestEmojis, requestStatuses };
+export { cities, groupEmojis, requestEmojis, requestStatuses, modalFormPositions };

@@ -35,6 +35,7 @@ const sessionTemplate = {
 const userTemplate = {
   id: '',
   name: '',
+  role: '',
   email: '',
   industry: '',
   sessions: [],

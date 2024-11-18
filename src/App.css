@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Homenaje&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 /* Quick CSS reset rules */
 * {
@@ -47,12 +48,17 @@
   --grayscale-7: #374151;
   --grayscale-8: #1f2937;
   --grayscale-9: #000000;
+
+  --pt-palette-main: #ed755f;
+  --pt-palette-contrast: #fadfd7;
+  --pt-palette-background: #fffbf6;
+  --pt-palette-other: #e8f4f1;
 }
 
 /* body */
 body {
-  font-family: 'Homenaje', sans-serif;
-  background-color: var(--grayscale-0);
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--pt-palette-background);
 }
 
 /* layout */
@@ -97,16 +103,48 @@ body {
 .width-lg { width: 64%; }
 .width-xl { width: 96%; }
 .width-full { width: 100%; }
+.horizontal-line { border-top: 1px solid var(--grayscale-4); }
+.vertical-line { border-left: 1px solid var(--grayscale-4); }
 .highlight { background-color: rgba(255, 255, 255, 0.3); }
+.position-absolute { position: absolute; }
+
+/* colours */
+.color-main { color: var(--pt-palette-main); }
+.color-contrast { color: var(--pt-palette-contrast); }
+.color-background { color: var(--pt-palette-background); }
+.color-other { color: var(--pt-palette-other); }
+.background-main { background-color: var(--pt-palette-main); }
+.background-contrast { background-color: var(--pt-palette-contrast); }
+.background-background { background-color: var(--pt-palette-background); }
+.background-other { background-color: var(--pt-palette-other); }
+
+/* app bar */
+.app-bar {
+  background-color: var(--pt-palette-main);
+}
+.appBarUserCircle {
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  color: var(--grayscale-8);
+  background-color: var(--pt-palette-contrast);
+}
 
 /* form */
 .text-input {
   border: 1px solid var(--grayscale-6);
   border-radius: 2px;
 }
+.text-input2 {
+  font-size: inherit;
+  border: none;
+  background-color: transparent;
+  border-bottom: 2px dashed var(--grayscale-8);
+  border-bottom: 2px solid var(--grayscale-8);
+}
 .action-element {
   cursor: pointer;
-  background-color: var(--palette-action);
+  background-color: var(--pt-palette-main);
   color: var(--grayscale-0);
 }
 .action-element:hover {
@@ -114,6 +152,30 @@ body {
 }
 .action-element:active {
   background-color: var(--palette-action-active);
+}
+.modal-form-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(2px);
+}
+.modal-form-children {
+  width: 100%;
+  background-color: var(--pt-palette-background);
+  background-color: var(--grayscale-0);
+  background-color: rgb(255,255,255);
+  box-shadow: 0 0 8px 4px rgba(100, 100, 100, 0.3);
+}
+.modal-form-children.top {
+  position: fixed;
+  top: 0;
+}
+.modal-form-children.bottom {
+  position: fixed;
+  bottom: 0;
 }
 
 /* circle */
@@ -148,15 +210,16 @@ body {
 }
 
 /* typography */
-.text.size-xxxs { font-size: 8px; }
-.text.size-xxs { font-size: 10px; }
-.text.size-xs { font-size: 12px; }
-.text.size-sm { font-size: 14px; }
-.text.size-md { font-size: 16px; }
-.text.size-lg { font-size: 20px; }
-.text.size-xl { font-size: 24px; }
-.text.size-xxl { font-size: 32px; }
-.text.size-xxxl { font-size: 48px; }
+.text.bold { font-weight: bold; }
+.text.size-xxxs { font-size: 7px; }
+.text.size-xxs { font-size: 8px; }
+.text.size-xs { font-size: 10px; }
+.text.size-sm { font-size: 12px; }
+.text.size-md { font-size: 14px; }
+.text.size-lg { font-size: 16px; }
+.text.size-xl { font-size: 20px; }
+.text.size-xxl { font-size: 24px; }
+.text.size-xxxl { font-size: 32px; }
 .text.center { text-align: center; }
 .text.line-height-xxxs { line-height: 0.6em; }
 .text.line-height-xxs { line-height: 0.8em; }
@@ -165,6 +228,10 @@ body {
 .text.line-height-md { line-height: 1.4em; }
 .text.line-height-lg { line-height: 1.8em; }
 .text.line-height-xl { line-height: 2.4em; }
+.text.color-main { color: var(--pt-palette-main); }
+.text.color-contrast { color: var(--pt-palette-contrast); }
+.text.color-background { color: var(--pt-palette-background); }
+.text.color-other { color: var(--pt-palette-other); }
 
 /* emoji */
 .emojiInput:hover .emojiPicker {

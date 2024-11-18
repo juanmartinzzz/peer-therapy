@@ -31,26 +31,6 @@ const SessionList = ({sessions}) => {
             {!session.isCompleted && (
               <SessionGroupsAndParticipants session={session} />
             )}
-
-            {/* {!session.isCompleted && (
-              <div className="padding-left-right-sm">
-                {auth.isAdmin() && (
-                  <div className="padding-top-bottom-sm">
-                    <SessionGroups session={session} />
-                  </div>
-                )}
-
-                <ParticipantList session={session} />
-
-                {auth.isAdmin() && (
-                  <div>
-                    <div className="flex center">
-                      <div className="text size-md action-element padding-sm">Randomly assign participants to groups</div>
-                    </div>
-                  </div>
-                )}
-              </div>
-            )} */}
           </Fragment>
         );
       })}
