@@ -41,9 +41,6 @@ const Session = () => {
           </div>
 
           <ParticipantBasicInfoForm sessionId={sessionId} />
-
-          {/* <ModalForm openButtonText="Fill your personal info">
-          </ModalForm> */}
         </>
       )}
     </>
