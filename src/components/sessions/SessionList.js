@@ -1,8 +1,8 @@
 import auth from "../../data/auth";
+import SessionName from "./SessionName";
+import SessionGroupsAndParticipants from "./SessionGroupsAndParticipants";
 import { Fragment, useState } from "react";
 import { addUserToSession } from "../../data/dataLayer";
-import SessionGroupsAndParticipants from "./SessionGroupsAndParticipants";
-import SessionName from "./SessionName";
 
 const joinSession = ({session, userSessions, setUserSessions}) => {
   // Add the session ID to the user's sessions list
@@ -19,24 +19,25 @@ const SessionList = ({sessions, setSession}) => {
   const [userSessions, setUserSessions] = useState(user.sessions);
 
   return (
-    <div className="flex column gap-sm">
-      {Object.values(sessions).map(session => {
+    <div className="flex column gap-xxs">
+      {Object.values(sessions).sort((a, b) => b.date.getTime() - a.date.getTime()).map(session => {
         const onClick = session.isCompleted ? undefined : () => joinSession({session, userSessions, setUserSessions});
         const shouldShowJoinButton = !session.isCompleted && !userSessions.includes(session.id);
 
         return (
           <Fragment key={session.id}>
-            <div className="text bold size-lg"><SessionName session={session} /></div>
+            <div className="flex center-vertical gap-xs">
+              <span className="text color-main size-md">{session.isCompleted ? 'Closed' : 'Upcoming'}</span>
+              <span className="text bold size-lg"><SessionName session={session} /></span>
+            </div>
             <div className="flex wrap gap-sm">
               <div className="padding-left-right-sm action-element" onClick={() => setSession(session)}>Edit</div>
-              <div className="padding-left-right-sm action-element">Join</div>
-              <div className="padding-left-right-sm action-element">Manage Groups</div>
+              <div className="padding-left-right-sm action-element" onClick={() => window.location.href = `/session/${session.id}`}>Join</div>
+              <div className="padding-left-right-sm action-element" onClick={() => window.location.href = `/session/${session.id}/ubq6nqwo4nd7a3infg`}>Manage Groups</div>
             </div>
-            <div className="horizontal-line"></div>
-
-            {/* {!session.isCompleted && (
-              <SessionGroupsAndParticipants session={session} />
-            )} */}
+            <div className="padding-top-bottom-sm">
+              <div className="horizontal-line"></div>
+            </div>
           </Fragment>
         );
       })}

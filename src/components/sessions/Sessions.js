@@ -24,7 +24,7 @@ const Sessions = () => {
         <SessionList sessions={sessions} setSession={setSession} />
       </div>
 
-      <SessionForm sessionToEdit={session} />
+      <SessionForm sessionToEdit={session} setSessionToEdit={setSession} />
     </>
   );
 };

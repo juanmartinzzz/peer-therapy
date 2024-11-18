@@ -22,7 +22,7 @@ const groupTemplate = {
 const locationTemplate = {
   nickname: '',
   city: cities.montreal,
-  hostCompanyName: 'Acme Inc.',
+  hostCompanyName: '',
 };
 
 const sessionTemplate = {

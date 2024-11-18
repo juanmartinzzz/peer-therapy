@@ -21,7 +21,7 @@ const ModalForm = ({children, position = modalFormPositions.bottom, openButtonTe
 
   const CloseButton = ({setIsOpen}) => {
     return (
-      <div className="flex space-between" onClick={() => setIsOpen(false)}>
+      <div className="flex space-between" onClick={() => closeModal({setIsOpen, onClose})}>
         <div></div>
         <div className="action-element padding-left-right-sm">x</div>
       </div>
@@ -30,9 +30,7 @@ const ModalForm = ({children, position = modalFormPositions.bottom, openButtonTe
 
   if(!isOpen) return (
     <div className="flex center padding-top-bottom-lg">
-      <div className="flex center background-main" style={{position: 'fixed', bottom: "40px"}} onClick={() => {
-        setIsOpen(true);
-      }}>
+      <div className="flex center background-main" style={{position: 'fixed', bottom: "40px"}} onClick={() => setIsOpen(true)}>
         <Button>
           <div className="text size-xxl">{openButtonText}</div>
         </Button>
@@ -41,7 +39,7 @@ const ModalForm = ({children, position = modalFormPositions.bottom, openButtonTe
   );
 
   return (
-    <div className="modal-form-background" onClick={() => closeModal({setIsOpen, onClose})}>
+    <div className="modal-form-background">
       <div className={`modal-form-children ${position}`}>
         <CloseButton setIsOpen={setIsOpen} />
 

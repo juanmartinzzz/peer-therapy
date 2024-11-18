@@ -11,7 +11,7 @@ const saveSession = ({session}) => {
   dataLayer.session.updateSession({session});
 }
 
-const SessionForm = ({sessionToEdit}) => {
+const SessionForm = ({sessionToEdit, setSessionToEdit}) => {
   const [shouldOpen, setShouldOpen] = useState(false);
   const [session, setSession] = useState(sessionTemplate);
 
@@ -21,7 +21,7 @@ const SessionForm = ({sessionToEdit}) => {
   }, [sessionToEdit]);
 
   return (
-    <ModalForm onSave={() => {saveSession({session}); setSession(sessionTemplate); setShouldOpen(false)}} onClose={() => {setSession(sessionTemplate); setShouldOpen(false)}} openButtonText="New Session" shouldOpen={shouldOpen}>
+    <ModalForm onSave={() => {saveSession({session}); setSessionToEdit(); setShouldOpen(false)}} onClose={() => {setSessionToEdit(); setShouldOpen(false)}} openButtonText="New Session" shouldOpen={shouldOpen}>
       <div className="flex column gap-sm padding-sm">
         <div className="text size-lg">Session details</div>
         <DateInput label="Date" value={session.date.toISOString().split('T')[0]} onChange={({target}) => setSession({...session, date: new Date(target.value)})} />
