@@ -146,6 +146,17 @@ const addUserToSession = async ({sessionId, user}) => {
 }
 
 const session = {
+  updateSession: async ({session}) => {
+    if(session.id) {
+      updateDocumentWithDefaultFields({docRef: doc(collection(db, `sessions`), session.id), data: session});
+
+      return session.id;
+    }
+
+    const docRef = await addDocumentWithDefaultFields({collectionName: `sessions`, data: session});
+
+    return docRef.id;
+  },
   onSessionsChange: async ({callback}) => {
     const q = query(collection(db, "sessions"));
 

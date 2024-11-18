@@ -1,9 +1,32 @@
-import { useState } from "react";
-import { modalFormPositions } from "../../data/enums";
 import Button from "./Button";
+import { useEffect, useState } from "react";
+import { modalFormPositions } from "../../data/enums";
 
-const ModalForm = ({children, position = modalFormPositions.bottom, openButtonText, saveButtonText, onSave}) => {
+const closeModal = ({setIsOpen, onClose}) => {
+  setIsOpen(false);
+  onClose && onClose();
+};
+
+const saveAndClose = ({setIsOpen, onSave}) => {
+  onSave && onSave();
+  setIsOpen(false);
+};
+
+const ModalForm = ({children, position = modalFormPositions.bottom, openButtonText, saveButtonText, onSave, onClose, shouldOpen = false}) => {
   const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    setIsOpen(shouldOpen);
+  }, [shouldOpen]);
+
+  const CloseButton = ({setIsOpen}) => {
+    return (
+      <div className="flex space-between" onClick={() => setIsOpen(false)}>
+        <div></div>
+        <div className="action-element padding-left-right-sm">x</div>
+      </div>
+    );
+  };
 
   if(!isOpen) return (
     <div className="flex center padding-top-bottom-lg">
@@ -18,14 +41,13 @@ const ModalForm = ({children, position = modalFormPositions.bottom, openButtonTe
   );
 
   return (
-    <div className="modal-form-background">
+    <div className="modal-form-background" onClick={() => closeModal({setIsOpen, onClose})}>
       <div className={`modal-form-children ${position}`}>
+        <CloseButton setIsOpen={setIsOpen} />
+
         {children}
 
-        <Button onClick={() => {
-          onSave && onSave();
-          setIsOpen(false);
-        }}>{saveButtonText || 'Save and close'}</Button>
+        <Button onClick={() => saveAndClose({setIsOpen, onSave})}>{saveButtonText || 'Save and close'}</Button>
       </div>
     </div>
   );

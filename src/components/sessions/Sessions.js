@@ -1,49 +1,31 @@
-
-import auth from "../../data/auth";
+import AppBar from "../appbar/appBar";
 import SessionList from "./SessionList";
-import NewSessionForm from "./NewSessionForm";
-import ParticipantForm from "../particpants/ParticipantForm";
+import SessionForm from "./SessionForm";
 import { useEffect, useState } from "react";
-import { sessionTemplate } from "../../data/entities";
 import { onSessionsChange } from "../../data/dataLayer";
+import { sessionTemplate } from "../../data/entities";
 
 const Sessions = () => {
-  const [session, setSession] = useState(sessionTemplate);
+  const [session, setSession] = useState();
   const [sessions, setSessions] = useState([]);
-  const [showNewSessionForm, setShowNewSessionForm] = useState(false);
 
   useEffect(() => {
     onSessionsChange({callback: ({documents}) => setSessions(documents)});
   }, []);
 
-  const NewSessionButton = ({setShowNewSessionForm}) => (
-    <div className="flex center padding-md">
-      <div className="flex center circle size-lg action-element" onClick={() => setShowNewSessionForm(true)}>
-        <div className="text size-xxl line-height-xxs center">n<br/>e<br/>w</div>
-      </div>
-    </div>
-  );
-
   return (
-    <div>
+    <>
+      <AppBar />
       <div className="flex column gap-sm padding-left-right-sm">
         <div className="flex center padding-top-bottom-md">
-          <div className="text size-xxl">Sessions & Groups</div>
+          <div className="text color-main bold size-xxl">Manage Sessions</div>
         </div>
 
-        <SessionList sessions={sessions} />
+        <SessionList sessions={sessions} setSession={setSession} />
       </div>
 
-      {auth.isAdmin() && (
-        <NewSessionButton setShowNewSessionForm={setShowNewSessionForm} />
-      )}
-
-      <div className="padding-top-bottom-md">
-        <ParticipantForm />
-      </div>
-
-      {showNewSessionForm && <NewSessionForm session={session} setSession={setSession} setShowNewSessionForm={setShowNewSessionForm} />}
-    </div>
+      <SessionForm sessionToEdit={session} />
+    </>
   );
 };
 

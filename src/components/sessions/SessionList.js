@@ -1,8 +1,8 @@
 import auth from "../../data/auth";
-import SessionTitle from "./SessionTitle";
 import { Fragment, useState } from "react";
 import { addUserToSession } from "../../data/dataLayer";
 import SessionGroupsAndParticipants from "./SessionGroupsAndParticipants";
+import SessionName from "./SessionName";
 
 const joinSession = ({session, userSessions, setUserSessions}) => {
   // Add the session ID to the user's sessions list
@@ -14,7 +14,7 @@ const joinSession = ({session, userSessions, setUserSessions}) => {
   setUserSessions([...userSessions, session.id]);
 };
 
-const SessionList = ({sessions}) => {
+const SessionList = ({sessions, setSession}) => {
   const user = auth.getUser();
   const [userSessions, setUserSessions] = useState(user.sessions);
 
@@ -26,11 +26,17 @@ const SessionList = ({sessions}) => {
 
         return (
           <Fragment key={session.id}>
-            <SessionTitle session={session} shouldShowJoinButton={shouldShowJoinButton} onClick={onClick} />
+            <div className="text bold size-lg"><SessionName session={session} /></div>
+            <div className="flex wrap gap-sm">
+              <div className="padding-left-right-sm action-element" onClick={() => setSession(session)}>Edit</div>
+              <div className="padding-left-right-sm action-element">Join</div>
+              <div className="padding-left-right-sm action-element">Manage Groups</div>
+            </div>
+            <div className="horizontal-line"></div>
 
-            {!session.isCompleted && (
+            {/* {!session.isCompleted && (
               <SessionGroupsAndParticipants session={session} />
-            )}
+            )} */}
           </Fragment>
         );
       })}
