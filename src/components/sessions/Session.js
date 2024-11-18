@@ -1,9 +1,11 @@
+import auth from "../../data/auth";
 import AppBar from "../appbar/appBar";
 import SessionGroupsAndParticipants from "./SessionGroupsAndParticipants";
 import ParticipantBasicInfoForm from "../particpants/ParticipantBasicInfoForm";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { dataLayer } from "../../data/dataLayer";
+import GroupForm2 from "../groups/GroupForm2";
 
 const Session = () => {
   const {sessionId} = useParams();
@@ -22,27 +24,39 @@ const Session = () => {
     return <div>Loading...</div>;
   }
 
+  const IntroText = () => {
+    return <div className="text size-lg center">{auth.isAdmin() ? 'Manage Groups for our session at' : 'Welcome to our Product Therapy session at'}</div>
+  }
+
+  const SessionSubtitle = () => {
+    if(auth.isAdmin()) {
+      return null;
+    }
+
+    return (
+      <>
+        <div className="text size-lg center">Please fill your info!</div>
+        <div className="text size-md center">We will create groups and assign participants shortly.</div>
+      </>
+    );
+  }
+
   return (
     <>
       <AppBar />
 
       <div className="flex column center padding-sm">
-        <div className="text size-lg center">Welcome to our Product Therapy session at</div>
+        <IntroText />
         <div className="text size-xxl color-main bold center">{session.location.hostCompanyName} in {session.location.city}</div>
-        <div className="text size-lg center">Please fill your info!</div>
-        <div className="text size-md center">We will create groups and assign participants shortly.</div>
+        <SessionSubtitle />
       </div>
 
+      <div className="padding-left-right-sm">
+        <SessionGroupsAndParticipants session={session} />
+      </div>
 
-      {!session.isCompleted && (
-        <>
-          <div className="padding-left-right-sm">
-            <SessionGroupsAndParticipants session={session} />
-          </div>
-
-          <ParticipantBasicInfoForm sessionId={sessionId} />
-        </>
-      )}
+      {!auth.isAdmin() && <ParticipantBasicInfoForm sessionId={sessionId} />}
+      {auth.isAdmin() && <GroupForm2 sessionId={sessionId} />}
     </>
   );
 }

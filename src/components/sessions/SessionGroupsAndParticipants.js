@@ -1,5 +1,6 @@
 import auth from "../../data/auth";
 import SessionGroups from "../groups/SessionGroups";
+import GroupList from "../groups/GroupList";
 import ParticipantList from "../particpants/ParticipantList";
 import { useEffect, useState } from "react";
 import { onGroupsChange, onParticipantsChange, updateGroupParticipants, updateParticipantGroup, updateParticipantsForGroup } from "../../data/dataLayer";
@@ -35,17 +36,19 @@ const SessionGroupsAndParticipants = ({session}) => {
 
   return (
     <>
-      {auth.isAdmin() && <SessionGroups session={session} groups={groups} />}
+      {/* {auth.isAdmin() && <SessionGroups session={session} groups={groups} />} */}
+
+      <GroupList session={session} groups={groups} />
 
       <ParticipantList participants={participants} groups={groups} />
 
-      {auth.isAdmin() && (
+      {/* {auth.isAdmin() && (
         <div>
           <div className="flex center">
             <div className="text size-md action-element padding-sm" onClick={() => randomlyAssignParticipantsToGroups({participants, groups})}>Randomly assign participants to groups</div>
           </div>
         </div>
-      )}
+      )} */}
     </>
   );
 }

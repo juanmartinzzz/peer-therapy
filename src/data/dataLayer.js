@@ -94,6 +94,17 @@ const updateGroupParticipants = async ({group, participants}) => {
 }
 
 const group = {
+  updateGroup: async ({group}) => {
+    if(group.id) {
+      updateDocumentWithDefaultFields({docRef: doc(collection(db, `sessions/${group.sessionId}/groups`), group.id), data: group});
+
+      return group.id;
+    }
+
+    const docRef = await addDocumentWithDefaultFields({collectionName: `sessions/${group.sessionId}/groups`, data: group});
+
+    return docRef.id;
+  },
   onGroupsChange: async ({sessionId, callback}) => {
     const q = query(collection(db, `sessions/${sessionId}/groups`));
 
