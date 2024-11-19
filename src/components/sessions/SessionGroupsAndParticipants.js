@@ -1,5 +1,4 @@
 import auth from "../../data/auth";
-import SessionGroups from "../groups/SessionGroups";
 import GroupList from "../groups/GroupList";
 import ParticipantList from "../particpants/ParticipantList";
 import { useEffect, useState } from "react";
@@ -25,7 +24,7 @@ const randomlyAssignParticipantsToGroups = ({participants, groups}) => {
   // return assignedParticipants;
 }
 
-const SessionGroupsAndParticipants = ({session}) => {
+const SessionGroupsAndParticipants = ({session, setGroupToEdit}) => {
   const [groups, setGroups] = useState([]);
   const [participants, setParticipants] = useState([]);
 
@@ -36,19 +35,15 @@ const SessionGroupsAndParticipants = ({session}) => {
 
   return (
     <>
-      {/* {auth.isAdmin() && <SessionGroups session={session} groups={groups} />} */}
+      <GroupList session={session} groups={groups} setGroupToEdit={setGroupToEdit} />
 
-      <GroupList session={session} groups={groups} />
+      {auth.isAdmin() && (
+        <div className="flex center">
+          <div className="text size-md action-element padding-left-right-sm" onClick={() => randomlyAssignParticipantsToGroups({participants, groups})}>Randomly assign participants to groups</div>
+        </div>
+      )}
 
       <ParticipantList participants={participants} groups={groups} />
-
-      {/* {auth.isAdmin() && (
-        <div>
-          <div className="flex center">
-            <div className="text size-md action-element padding-sm" onClick={() => randomlyAssignParticipantsToGroups({participants, groups})}>Randomly assign participants to groups</div>
-          </div>
-        </div>
-      )} */}
     </>
   );
 }

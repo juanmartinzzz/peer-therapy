@@ -9,6 +9,7 @@ import GroupForm2 from "../groups/GroupForm2";
 
 const Session = () => {
   const {sessionId} = useParams();
+  const [group, setGroup] = useState();
   const [session, setSession] = useState({});
   const [sessions, setSessions] = useState({});
 
@@ -52,11 +53,11 @@ const Session = () => {
       </div>
 
       <div className="padding-left-right-sm">
-        <SessionGroupsAndParticipants session={session} />
+        <SessionGroupsAndParticipants session={session} setGroupToEdit={setGroup} />
       </div>
 
       {!auth.isAdmin() && <ParticipantBasicInfoForm sessionId={sessionId} />}
-      {auth.isAdmin() && <GroupForm2 sessionId={sessionId} />}
+      {auth.isAdmin() && <GroupForm2 sessionId={sessionId} groupToEdit={group} setGroupToEdit={setGroup} />}
     </>
   );
 }
