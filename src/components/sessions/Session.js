@@ -1,5 +1,5 @@
 import auth from "../../data/auth";
-import AppBar from "../appbar/appBar";
+import AppBar from "../appbar/AppBar";
 import SessionGroupsAndParticipants from "./SessionGroupsAndParticipants";
 import ParticipantBasicInfoForm from "../particpants/ParticipantBasicInfoForm";
 import { useEffect, useState } from "react";

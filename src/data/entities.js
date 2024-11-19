@@ -7,8 +7,9 @@ const requestTemplate = {
   sessionId: '',
   participantId: '',
   emotionalState: '',
+  thingsAskedForKeys: [],
+  otherThingToAskFor: '',
   emotionalStateEmoji: '',
-  requestToGroup: '',
   status: requestStatuses.editing,
 };
 

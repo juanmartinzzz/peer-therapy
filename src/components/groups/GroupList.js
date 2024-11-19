@@ -1,4 +1,5 @@
 import { Fragment } from "react";
+import auth from "../../data/auth";
 
 const GroupList = ({groups, setGroupToEdit}) => {
   return (
@@ -12,9 +13,11 @@ const GroupList = ({groups, setGroupToEdit}) => {
               <span className="text size-sm">Participants: {group.participantIds ? group.participantIds.length : 0}</span>
             </div>
 
-            <div className="flex gap-xs">
-              <div className="action-element text size-sm padding-left-right-sm" onClick={() => setGroupToEdit(group)}>Edit</div>
-            </div>
+            {auth.isAdmin() && (
+              <div className="flex gap-xs">
+                <div className="action-element text size-sm padding-left-right-sm" onClick={() => setGroupToEdit(group)}>Edit</div>
+              </div>
+            )}
 
             <div className="padding-top-bottom-xs"><div className="horizontal-line"></div></div>
           </Fragment>

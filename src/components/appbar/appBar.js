@@ -5,7 +5,8 @@ const AppBar = () => {
   return (
     <div className="flex center-vertical space-between app-bar padding-top-bottom-xs padding-left-right-sm">
       <img width="36px" src={logo} alt="logo" />
-      <div className="appBarUserCircle flex center circle">
+      <div className="appBarUserCircle flex center circle
+      ">
         <div className="text size-xl">
           {auth.getUser() && auth.getUser().name.split(' ')[0][0]}
         </div>

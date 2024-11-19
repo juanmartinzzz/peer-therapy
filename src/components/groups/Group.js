@@ -1,8 +1,10 @@
 import auth from "../../data/auth";
+import AppBar from "../appbar/AppBar";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { dataLayer } from "../../data/dataLayer";
 import RequestForm from "../requests/RequestForm";
+import RequestForm2 from "../requests/RequestForm2";
 
 const getParticipant = ({participants, id}) => participants.find(participant => participant.id === id) || {};
 
@@ -31,23 +33,20 @@ const Group = () => {
 
   return (
     <>
-      <div className="flex column center padding-top-bottom-md">
-        <div className="text size-lg">Session at {session.location && session.location.hostCompanyName}</div>
+      <AppBar />
+
+      <div className="flex column center padding-sm">
+        <div className="text size-lg">Welcome to</div>
         <div className="flex center gap-xs">
-          <div className="text size-lg">Group</div>
-          <div className="text size-xxl">{group.name}</div>
+          <div className="text color-main bold size-xxl">{group.name}</div>
         </div>
       </div>
 
-      <div className="flex gap-sm padding-left-right-sm">
-        Participants:{participantsInGroup.map(participant => <div className="text size-md" key={participant.id}>{participant.name}</div>)}
-      </div>
-
       <div className="padding-sm">
-        <div className="text size-lg">Requests</div>
+        <div className="flex center text size-xl">Requests</div>
         {requests.map(request => (
           <div key={request.id}>
-            <div className="text size-md">Request from: {getParticipant({participants, id: request.participantId}).name}</div>
+            <div className="text color-main bold size-lg">{getParticipant({participants, id: request.participantId}).name}</div>
             <div className="text size-sm">{request.emotionalStateEmoji} ({request.emotionalState})</div>
             <div className="text size-sm">{request.requestToGroup}</div>
             <div className="text size-sm">{request.context}</div>
@@ -55,9 +54,7 @@ const Group = () => {
         ))}
       </div>
 
-      <div className="card padding-top-bottom-md padding-left-right-sm">
-        <RequestForm participantRequest={requests[0]} />
-      </div>
+      <RequestForm2 sessionId={sessionId} groupId={groupId} />
     </>
   );
 }

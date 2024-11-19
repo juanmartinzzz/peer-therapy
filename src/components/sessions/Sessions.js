@@ -1,4 +1,4 @@
-import AppBar from "../appbar/appBar";
+import AppBar from "../appbar/AppBar";
 import SessionList from "./SessionList";
 import SessionForm from "./SessionForm";
 import { useEffect, useState } from "react";
