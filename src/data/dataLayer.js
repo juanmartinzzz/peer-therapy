@@ -73,6 +73,18 @@ const addDocumentWithDefaultFields = async ({collectionName, data, id}) => {
 // data methods
 
 const request = {
+  updateRequest: async ({request}) => {
+    console.log({requestToBeUpdated: request});
+    if(request.id) {
+      updateDocumentWithDefaultFields({docRef: doc(collection(db, `sessions/${request.sessionId}/groups/${request.groupId}/requests`), request.id), data: request});
+
+      return request.id;
+    }
+
+    const docRef = await addDocumentWithDefaultFields({collectionName: `sessions/${request.sessionId}/groups/${request.groupId}/requests`, data: request});
+
+    return docRef.id;
+  },
   onRequestsChange: async ({sessionId, groupId, callback}) => {
     const q = query(collection(db, `sessions/${sessionId}/groups/${groupId}/requests`));
 

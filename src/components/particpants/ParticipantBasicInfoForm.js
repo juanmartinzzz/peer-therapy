@@ -30,13 +30,18 @@ const ParticipantBasicInfoForm = ({sessionId}) => {
 
   return (
     <ModalForm onSave={() => saveUser({user, sessionId})} openButtonText="Fill your personal info" saveButtonText="Save and join the session">
-      <div className="flex column padding-sm">
+      <div className="flex column padding-left-right-sm">
         <div className="text size-lg">Please tell us a bit about yourself</div>
         <div className="text size-sm">This will help us create groups and assign participants</div>
       </div>
 
       <div className="padding-top-bottom-sm padding-left-right-sm">
         <div className="text size-lg">My name is <TextInput2 placeholder="Name" value={user.name} onChange={({target}) => setUser({...user, name: target.value})} /> and I am a <TextInput2 placeholder="Role" value={user.role} onChange={({target}) => setUser({...user, role: target.value})} /> in a <TextInput2 placeholder="Industry" value={user.industry} onChange={({target}) => setUser({...user, industry: target.value})} /> company.</div>
+      </div>
+
+      <div className="padding-top-bottom-sm padding-left-right-sm">
+        <div className="text size-lg">My email is <TextInput2 placeholder="Email" value={user.email} onChange={({target}) => setUser({...user, email: target.value})} />.</div>
+        <div className="text size-md color-main">Don't worry: nobody will see your email! It's just for us.</div>
       </div>
     </ModalForm>
   );

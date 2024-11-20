@@ -3,8 +3,9 @@ import AppBar from "../appbar/AppBar";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { dataLayer } from "../../data/dataLayer";
-import RequestForm from "../requests/RequestForm";
 import RequestForm2 from "../requests/RequestForm2";
+import Role from "../particpants/Role";
+import { thingsToAskForOptions } from "../../data/enums";
 
 const getParticipant = ({participants, id}) => participants.find(participant => participant.id === id) || {};
 
@@ -18,18 +19,27 @@ const Group = () => {
   const [participants, setParticipants] = useState([]);
 
   // const group = groups.length > 0 ? groups.find(group => group.participantIds.includes(user.id)) : {};
-  const participantsInGroup = participants.filter(participant => group.participantIds.includes(participant.id));
+  // const participantsInGroup = participants.filter(participant => group.participantIds.includes(participant.id));
 
   useEffect(() => {
-    dataLayer.session.onSessionsChange({sessionId, callback: ({documents}) => {
-      setSession(documents.find(session => session.id === sessionId));
-    }});
+    // dataLayer.session.onSessionsChange({sessionId, callback: ({documents}) => {
+    //   setSession(documents.find(session => session.id === sessionId));
+    // }});
     dataLayer.group.onGroupsChange({sessionId, callback: ({documents}) => {
       setGroup(documents.find(group => group.id === groupId));
     }});
     dataLayer.request.onRequestsChange({sessionId, groupId, callback: ({documents}) => setRequests(documents)});
     dataLayer.participant.onParticipantsChange({sessionId, callback: ({documents}) => setParticipants(documents)});
   }, []);
+
+  const ParticipantInfo = ({participant}) => {
+    return (
+      <div>
+        <div className="text size-xl color-main bold">{participant.name}</div>
+        <div><Role participant={participant} /> working in {participant.industry}</div>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -43,13 +53,21 @@ const Group = () => {
       </div>
 
       <div className="padding-sm">
-        <div className="flex center text size-xl">Requests</div>
+        <div className="flex center text size-xl">People in our group and their requests</div>
         {requests.map(request => (
-          <div key={request.id}>
-            <div className="text color-main bold size-lg">{getParticipant({participants, id: request.participantId}).name}</div>
-            <div className="text size-sm">{request.emotionalStateEmoji} ({request.emotionalState})</div>
-            <div className="text size-sm">{request.requestToGroup}</div>
-            <div className="text size-sm">{request.context}</div>
+          <div className="flex column padding-top-bottom-sm gap-xs" key={request.id}>
+            <ParticipantInfo participant={getParticipant({participants, id: request.participantId})} />
+            {/* <div className="text color-main bold size-lg">{getParticipant({participants, id: request.participantId}).name}</div> */}
+            <div className="flex center-vertical gap-xs">Feeling <span className="text size-xxxl">{request.emotionalStateEmoji}</span></div>
+            <div className="">Want to</div>
+            <div className="padding-left-right-sm">
+              {[...request.thingsAskedForKeys.map(key => thingsToAskForOptions[key]), request.otherThingToAskFor].join(', ').split(', ').map(thing => (
+                <div className="text size-md color-main">{thing}</div>
+              ))}
+            </div>
+            <div className="">For context:</div>
+            <div className="text size-md">{request.context}</div>
+            <div className="horizontal-line"></div>
           </div>
         ))}
       </div>

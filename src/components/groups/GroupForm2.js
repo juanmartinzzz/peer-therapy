@@ -26,7 +26,7 @@ const GroupForm2 = ({sessionId, groupToEdit, setGroupToEdit}) => {
   }, [groupToEdit]);
 
   return (
-    <ModalForm openButtonText="New Group" saveButtonText="Save Group" onSave={() => {saveGroup({group}); setGroupToEdit();}} shouldOpen={shouldOpen} onClose={() => {setGroupToEdit();}}>
+    <ModalForm openButtonText="Create new group" saveButtonText="Save Group" onSave={() => {saveGroup({group}); setGroupToEdit();}} shouldOpen={shouldOpen} onClose={() => {setGroupToEdit();}}>
       <div className="flex column gap-sm padding-sm">
         <div>
           <div className="text size-xl">Make your group stand out!</div>

@@ -7,16 +7,19 @@ import CheckboxInput from "../form/CheckboxInput";
 import { useState } from "react";
 import { requestTemplate } from "../../data/entities";
 import { requestEmojis, requestStatuses, thingsToAskForOptions } from "../../data/enums";
+import { dataLayer } from "../../data/dataLayer";
 
 const saveRequest = ({ sessionId, groupId, request }) => {
   const requestToSave = {
     ...request,
-    status: requestStatuses.pending,
-    sessionId,
+    id: auth.getUser().id,
     groupId,
+    sessionId,
+    status: requestStatuses.submitted,
     participantId: auth.getUser().id,
   };
-  console.log(requestToSave);
+
+  dataLayer.request.updateRequest({request: requestToSave});
 };
 
 const toggleThingToAskForKey = ({request, thingToAskForKey, setRequest}) => {
@@ -41,7 +44,7 @@ const RequestForm2 = ({sessionId, groupId}) => {
   };
 
   return (
-    <ModalForm openButtonText="Ask the group for something" saveButtonText="Save your request to the group" onSave={() => saveRequest({sessionId, groupId, request})}>
+    <ModalForm openButtonText="Share with the group" saveButtonText="Save your request to the group" onSave={() => saveRequest({sessionId, groupId, request})}>
       <div className="flex column gap-md padding-left-right-sm">
         <div>
           <div>Today I feel: <span className="text size-xxl">{request.emotionalStateEmoji}</span></div>

@@ -21,7 +21,7 @@ const SessionForm = ({sessionToEdit, setSessionToEdit}) => {
   }, [sessionToEdit]);
 
   return (
-    <ModalForm onSave={() => {saveSession({session}); setSessionToEdit(); setShouldOpen(false)}} onClose={() => {setSessionToEdit(); setShouldOpen(false)}} openButtonText="New Session" shouldOpen={shouldOpen}>
+    <ModalForm openButtonText="Create new session" onSave={() => {saveSession({session}); setSessionToEdit(); setShouldOpen(false)}} onClose={() => {setSessionToEdit(); setShouldOpen(false)}} shouldOpen={shouldOpen}>
       <div className="flex column gap-sm padding-sm">
         <div className="text size-lg">Session details</div>
         <DateInput label="Date" value={session.date.toISOString().split('T')[0]} onChange={({target}) => setSession({...session, date: new Date(target.value)})} />

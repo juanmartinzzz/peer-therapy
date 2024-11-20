@@ -1,14 +1,15 @@
+import Role from "./Role";
 import { Fragment } from "react";
-import { nonDisclosedRoleReplacements } from "../../data/enums";
+// import { nonDisclosedRoleReplacements } from "../../data/enums";
 
-const getRole = ({participant}) => {
-  if(participant.role) {
-    return participant.role;
-  }
+// const getRole = ({participant}) => {
+//   if(participant.role) {
+//     return participant.role;
+//   }
 
-  const randomIndex = Object.keys(nonDisclosedRoleReplacements)[Math.floor(Math.random() * Object.keys(nonDisclosedRoleReplacements).length)];
-  return nonDisclosedRoleReplacements[randomIndex];
-};
+//   const randomIndex = Object.keys(nonDisclosedRoleReplacements)[Math.floor(Math.random() * Object.keys(nonDisclosedRoleReplacements).length)];
+//   return nonDisclosedRoleReplacements[randomIndex];
+// };
 
 const getGroup = ({groupId, groups}) => groups.find(group => group.id === groupId);
 
@@ -25,7 +26,7 @@ const ParticipantList = ({participants, groups}) => {
                 <div className="flex column gap-xs">
                   <div className="flex gap-xs text size-md">
                     <img width="16px" height="16px" src={"	https://cdn-icons-png.flaticon.com/16/2488/2488751.png"} />
-                    {getRole({participant})} working in {participant.industry}
+                    <Role participant={participant} /> working in {participant.industry}
                   </div>
                   <div className="flex gap-xs text size-md">
                     <img width="16px" height="16px" src={"https://cdn-icons-png.flaticon.com/16/5510/5510563.png"} />
