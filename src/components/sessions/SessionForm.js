@@ -2,8 +2,8 @@ import ModalForm from "../form/ModalForm";
 import DateInput from "../form/DateInput";
 import TextInput from "../form/TextInput";
 import SelectInput from "../form/SelectInput";
-import { useEffect, useState } from "react";
 import { cities } from "../../data/enums";
+import { useEffect, useState } from "react";
 import { dataLayer } from "../../data/dataLayer";
 import { sessionTemplate } from "../../data/entities";
 

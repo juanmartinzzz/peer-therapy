@@ -2,7 +2,7 @@ import auth from "../../data/auth";
 import ModalForm from "../form/ModalForm";
 import TextInput2 from "../form/TextInput2";
 import { useState } from "react";
-import { addUserToSession, updateUser } from "../../data/dataLayer";
+import { dataLayer } from "../../data/dataLayer";
 
 const joinSession = ({sessionId}) => {
   // Add the session ID to the user's sessions list
@@ -10,7 +10,7 @@ const joinSession = ({sessionId}) => {
 
   // Add the user to the session
   const user = auth.getUser();
-  addUserToSession({sessionId, user});
+  dataLayer.user.addUserToSession({sessionId, user});
 };
 
 const saveUser = async ({user, sessionId}) => {
@@ -20,7 +20,7 @@ const saveUser = async ({user, sessionId}) => {
 
   auth.updateUser({user});
   const updatedUser = auth.getUser();
-  await updateUser({user: updatedUser});
+  await dataLayer.user.updateUser({user: updatedUser});
 
   joinSession({sessionId});
 }

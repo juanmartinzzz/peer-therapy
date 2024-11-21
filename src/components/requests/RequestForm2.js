@@ -5,18 +5,18 @@ import EmojiPicker from "../form/EmojiPicker";
 import TextareaInput from "../form/TextareaInput";
 import CheckboxInput from "../form/CheckboxInput";
 import { useState } from "react";
+import { dataLayer } from "../../data/dataLayer";
 import { requestTemplate } from "../../data/entities";
 import { requestEmojis, requestStatuses, thingsToAskForOptions } from "../../data/enums";
-import { dataLayer } from "../../data/dataLayer";
 
 const saveRequest = ({ sessionId, groupId, request }) => {
   const requestToSave = {
     ...request,
-    id: auth.getUser().id,
     groupId,
     sessionId,
-    status: requestStatuses.submitted,
+    id: auth.getUser().id,
     participantId: auth.getUser().id,
+    status: requestStatuses.submitted,
   };
 
   dataLayer.request.updateRequest({request: requestToSave});
@@ -36,9 +36,9 @@ const RequestForm2 = ({sessionId, groupId}) => {
 
   const ThingToAskForOption = ({thingToAskForKey}) => {
     return (
-      <div className="flex gap-xs">
-        <CheckboxInput checked={request.thingsAskedForKeys.includes(thingToAskForKey)} onChange={() => toggleThingToAskForKey({request, thingToAskForKey, setRequest})} />
-        <div>{thingsToAskForOptions[thingToAskForKey]}</div>
+      <div className="flex gap-xs" onClick={() => toggleThingToAskForKey({request, thingToAskForKey, setRequest})}>
+        <CheckboxInput checked={request.thingsAskedForKeys.includes(thingToAskForKey)} />
+        <div className="pointer">{thingsToAskForOptions[thingToAskForKey]}</div>
       </div>
     )
   };

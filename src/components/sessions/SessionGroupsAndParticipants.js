@@ -2,26 +2,25 @@ import auth from "../../data/auth";
 import GroupList from "../groups/GroupList";
 import ParticipantList from "../particpants/ParticipantList";
 import { useEffect, useState } from "react";
-import { onGroupsChange, onParticipantsChange, updateGroupParticipants, updateParticipantGroup, updateParticipantsForGroup } from "../../data/dataLayer";
+import { dataLayer } from "../../data/dataLayer";
 
 const randomlyAssignParticipantsToGroups = ({participants, groups}) => {
+  console.log({participants, groups});
   const shuffledParticipants = participants.sort(() => 0.5 - Math.random());
+
   // Divide participants into as many arrays as there are groups
   const assignedParticipants = [];
   for (let i = 0; i < groups.length; i++) {
     assignedParticipants.push(shuffledParticipants.slice(i * (shuffledParticipants.length / groups.length), (i + 1) * (shuffledParticipants.length / groups.length)));
   }
 
-  console.log({assignedParticipants});
-
+  // Assign each group an array of participants
   groups.forEach((group, index) => {
-    updateGroupParticipants({group, participants: assignedParticipants[index]});
+    dataLayer.group.updateGroupParticipants({group, participants: assignedParticipants[index]});
     assignedParticipants[index].forEach(participant => {
-      updateParticipantGroup({participant, group});
+      dataLayer.participant.updateParticipantGroup({participant, group});
     });
   });
-
-  // return assignedParticipants;
 }
 
 const SessionGroupsAndParticipants = ({session, setGroupToEdit}) => {
@@ -29,8 +28,8 @@ const SessionGroupsAndParticipants = ({session, setGroupToEdit}) => {
   const [participants, setParticipants] = useState([]);
 
   useEffect(() => {
-    onGroupsChange({sessionId: session.id, callback: ({documents}) => setGroups(documents)});
-    onParticipantsChange({sessionId: session.id, callback: ({documents}) => setParticipants(documents)});
+    dataLayer.group.onGroupsChange({sessionId: session.id, callback: ({documents}) => setGroups(documents)});
+    dataLayer.participant.onParticipantsChange({sessionId: session.id, callback: ({documents}) => setParticipants(documents)});
   }, []);
 
   return (

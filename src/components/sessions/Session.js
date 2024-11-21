@@ -1,11 +1,11 @@
 import auth from "../../data/auth";
 import AppBar from "../appbar/AppBar";
+import GroupForm2 from "../groups/GroupForm2";
 import SessionGroupsAndParticipants from "./SessionGroupsAndParticipants";
 import ParticipantBasicInfoForm from "../particpants/ParticipantBasicInfoForm";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { dataLayer } from "../../data/dataLayer";
-import GroupForm2 from "../groups/GroupForm2";
 
 const Session = () => {
   const {sessionId} = useParams();
@@ -42,9 +42,11 @@ const Session = () => {
     );
   }
 
+  const backAction = auth.isAdmin() ? () => {window.location.href = '/ubq6nqwo4nd7a3infg';} : null;
+
   return (
     <>
-      <AppBar />
+      <AppBar backAction={backAction} />
 
       <div className="flex column center padding-sm">
         <IntroText />

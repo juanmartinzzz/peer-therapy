@@ -1,11 +1,10 @@
 import { db } from "../integrations/firebase";
-import { sessionTemplate } from "./entities";
-import { addDoc, collection, collectionGroup, doc, getDocs, onSnapshot, query, setDoc, where } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, onSnapshot, query, setDoc } from "firebase/firestore";
 
 // helpers
 
 const setCallbackOnQuerySnapshot = async ({query, callback}) => {
-  const unsubscribe = onSnapshot(query, querySnapshot => {
+  onSnapshot(query, querySnapshot => {
     const documents = [];
     querySnapshot.forEach(doc => {
         documents.push({...doc.data(), id: doc.id});
@@ -95,16 +94,6 @@ const request = {
   }
 }
 
-const updateParticipantGroup = async ({participant, group}) => {
-  const docRef = doc(collection(db, `sessions/${group.sessionId}/participants`), participant.id);
-  await setDoc(docRef, {...participant, groupId: group.id});
-}
-
-const updateGroupParticipants = async ({group, participants}) => {
-  const docRef = doc(collection(db, `sessions/${group.sessionId}/groups`), group.id);
-  await setDoc(docRef, {...group, participantIds: participants.map(participant => participant.id)});
-}
-
 const group = {
   updateGroup: async ({group}) => {
     if(group.id) {
@@ -121,25 +110,14 @@ const group = {
     const q = query(collection(db, `sessions/${sessionId}/groups`));
 
     setCallbackOnQuerySnapshot({query: q, callback});
+  },
+  updateGroupParticipants: async ({group, participants}) => {
+    const docRef = doc(collection(db, `sessions/${group.sessionId}/groups`), group.id);
+    await setDoc(docRef, {...group, participantIds: participants.map(participant => participant.id)});
+  },
+  deleteGroup: async ({group}) => {
+    await deleteDoc(doc(collection(db, `sessions/${group.sessionId}/groups`), group.id));
   }
-}
-
-const onGroupsChange = async ({sessionId, callback}) => {
-  const q = query(collection(db, `sessions/${sessionId}/groups`));
-
-  setCallbackOnQuerySnapshot({query: q, callback});
-}
-
-const updateGroup = async ({group}) => {
-  if(group.id) {
-    updateDocumentWithDefaultFields({docRef: doc(collection(db, `sessions/${group.sessionId}/groups`), group.id), data: group});
-
-    return group.id;
-  }
-
-  const docRef = await addDocumentWithDefaultFields({collectionName: `sessions/${group.sessionId}/groups`, data: group});
-
-  return docRef.id;
 }
 
 const participant = {
@@ -147,25 +125,24 @@ const participant = {
     const q = query(collection(db, `sessions/${sessionId}/participants`));
 
     setCallbackOnQuerySnapshot({query: q, callback});
+  },
+  updateParticipantGroup: async ({participant, group}) => {
+    const docRef = doc(collection(db, `sessions/${group.sessionId}/participants`), participant.id);
+    await setDoc(docRef, {...participant, groupId: group.id});
+  },
+}
+
+const user = {
+  updateUser: async ({user}) => {
+    user.sessions.map(sessionId => {
+      const docRef = doc(collection(db, `sessions/${sessionId}/participants`), user.id);
+
+      updateDocumentWithDefaultFields({docRef, data: user});
+    });
+  },
+  addUserToSession: async ({sessionId, user}) => {
+    await addDocumentWithDefaultFields({collectionName: `sessions/${sessionId}/participants`, data: user, id: user.id});
   }
-}
-
-const onParticipantsChange = async ({sessionId, callback}) => {
-  const q = query(collection(db, `sessions/${sessionId}/participants`));
-
-  setCallbackOnQuerySnapshot({query: q, callback});
-}
-
-const updateUser = async ({user}) => {
-  user.sessions.map(sessionId => {
-    const docRef = doc(collection(db, `sessions/${sessionId}/participants`), user.id);
-
-    updateDocumentWithDefaultFields({docRef, data: user});
-  });
-}
-
-const addUserToSession = async ({sessionId, user}) => {
-  await addDocumentWithDefaultFields({collectionName: `sessions/${sessionId}/participants`, data: user, id: user.id});
 }
 
 const session = {
@@ -189,19 +166,8 @@ const session = {
   }
 }
 
-const createSession = async ({ session = sessionTemplate }) => {
-  addDocumentWithDefaultFields({ collectionName: 'sessions', data: session });
-}
-
-const onSessionsChange = async ({callback}) => {
-  const q = query(collection(db, "sessions"));
-
-  setCallbackOnQuerySnapshot({query: q, callback: ({documents}) => {
-    callback({documents: documents.map(document => ({...document, date: new Date(document.date.seconds * 1000)}))})
-  }});
-}
-
 const dataLayer = {
+  user,
   group,
   request,
   session,
@@ -210,13 +176,4 @@ const dataLayer = {
 
 export {
   dataLayer,
-  updateUser,
-  updateGroup,
-  createSession,
-  onGroupsChange,
-  onSessionsChange,
-  addUserToSession,
-  onParticipantsChange,
-  updateParticipantGroup,
-  updateGroupParticipants,
 };

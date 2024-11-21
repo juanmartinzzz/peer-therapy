@@ -1,7 +1,6 @@
 import TextInput from "../form/TextInput";
 import ModalForm from "../form/ModalForm";
 import { useEffect, useState } from "react";
-import { groupEmojis } from "../../data/enums";
 import { dataLayer } from "../../data/dataLayer";
 import { groupTemplate } from "../../data/entities";
 
@@ -27,13 +26,14 @@ const GroupForm2 = ({sessionId, groupToEdit, setGroupToEdit}) => {
 
   return (
     <ModalForm openButtonText="Create new group" saveButtonText="Save Group" onSave={() => {saveGroup({group}); setGroupToEdit();}} shouldOpen={shouldOpen} onClose={() => {setGroupToEdit();}}>
-      <div className="flex column gap-sm padding-sm">
+      <div className="flex column gap-sm padding-left-right-sm">
         <div>
           <div className="text size-xl">Make your group stand out!</div>
           <div className="text size-lg">Give it a distinctive or funny name</div>
         </div>
 
         <TextInput label="Name" placeholder="Name" value={group.name} onChange={({target}) => setGroup({...group, name: target.value})} />
+        <div></div>
       </div>
     </ModalForm>
   );

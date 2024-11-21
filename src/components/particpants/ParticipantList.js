@@ -1,24 +1,25 @@
 import Role from "./Role";
+import auth from "../../data/auth";
 import { Fragment } from "react";
-// import { nonDisclosedRoleReplacements } from "../../data/enums";
-
-// const getRole = ({participant}) => {
-//   if(participant.role) {
-//     return participant.role;
-//   }
-
-//   const randomIndex = Object.keys(nonDisclosedRoleReplacements)[Math.floor(Math.random() * Object.keys(nonDisclosedRoleReplacements).length)];
-//   return nonDisclosedRoleReplacements[randomIndex];
-// };
 
 const getGroup = ({groupId, groups}) => groups.find(group => group.id === groupId);
+
+const getSortedParticipants = ({participants, participantId}) => {
+  return participants.sort((a, b) => {
+    if(a.id === auth.getUser().id) {
+      return -1;
+    }
+
+    return a.name.localeCompare(b.name);
+  });
+};
 
 const ParticipantList = ({participants, groups}) => {
   return (
     <>
       <div className="flex center padding-top-bottom-md text size-xl">Participants ({participants.length})</div>
       <div className="flex column gap-xs">
-        {participants.sort((a, b) => a.name.localeCompare(b.name)).map(participant => {
+        {getSortedParticipants({participants}).map(participant => {
           return (
             <Fragment key={participant.id}>
               <div className="flex column gap-xs">

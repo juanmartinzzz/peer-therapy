@@ -1,17 +1,21 @@
+import auth from "../../data/auth";
 import AppBar from "../appbar/AppBar";
 import SessionList from "./SessionList";
 import SessionForm from "./SessionForm";
 import { useEffect, useState } from "react";
-import { onSessionsChange } from "../../data/dataLayer";
-import { sessionTemplate } from "../../data/entities";
+import { dataLayer } from "../../data/dataLayer";
 
 const Sessions = () => {
   const [session, setSession] = useState();
   const [sessions, setSessions] = useState([]);
 
   useEffect(() => {
-    onSessionsChange({callback: ({documents}) => setSessions(documents)});
+    dataLayer.session.onSessionsChange({callback: ({documents}) => setSessions(documents)});
   }, []);
+
+  if(!auth.isAdmin()) {
+    return <div>Sorry! You are not an admin. Please use the admin link to have admin powers.</div>;
+  }
 
   return (
     <>

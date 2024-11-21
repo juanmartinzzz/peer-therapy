@@ -15,7 +15,7 @@ const EmojiPicker = ({emojis = [], currentEmoji = '🤬', onClick = () => {}, nu
 
   const Emoji = ({emoji}) => (
     <div
-      className="padding-left-right-sm"
+      className="padding-left-right-sm pointer"
       style={{borderRadius: '4px', border: `1px solid ${selectedEmoji === emojis[emoji] ? 'var(--pt-palette-main)' : '#ffffff'}`}}
       onClick={() => onSelectEmoji({emoji: emojis[emoji], setSelectedEmoji, setShouldShowMoreOptions, onClick})}
     >{emojis[emoji]}</div>

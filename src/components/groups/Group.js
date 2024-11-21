@@ -1,30 +1,20 @@
-import auth from "../../data/auth";
 import AppBar from "../appbar/AppBar";
+import Role from "../particpants/Role";
+import RequestForm2 from "../requests/RequestForm2";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { dataLayer } from "../../data/dataLayer";
-import RequestForm2 from "../requests/RequestForm2";
-import Role from "../particpants/Role";
 import { thingsToAskForOptions } from "../../data/enums";
 
 const getParticipant = ({participants, id}) => participants.find(participant => participant.id === id) || {};
 
 const Group = () => {
-  const user = auth.getUser();
   const { sessionId, groupId } = useParams();
   const [group, setGroup] = useState({});
-  const [session, setSession] = useState({});
-  // const [groups, setGroups] = useState([]);
   const [requests, setRequests] = useState([]);
   const [participants, setParticipants] = useState([]);
 
-  // const group = groups.length > 0 ? groups.find(group => group.participantIds.includes(user.id)) : {};
-  // const participantsInGroup = participants.filter(participant => group.participantIds.includes(participant.id));
-
   useEffect(() => {
-    // dataLayer.session.onSessionsChange({sessionId, callback: ({documents}) => {
-    //   setSession(documents.find(session => session.id === sessionId));
-    // }});
     dataLayer.group.onGroupsChange({sessionId, callback: ({documents}) => {
       setGroup(documents.find(group => group.id === groupId));
     }});
@@ -43,7 +33,7 @@ const Group = () => {
 
   return (
     <>
-      <AppBar />
+      <AppBar backAction={() => {window.location.href = `/session/${sessionId}`;}} />
 
       <div className="flex column center padding-sm">
         <div className="text size-lg">Welcome to</div>
@@ -57,7 +47,6 @@ const Group = () => {
         {requests.map(request => (
           <div className="flex column padding-top-bottom-sm gap-xs" key={request.id}>
             <ParticipantInfo participant={getParticipant({participants, id: request.participantId})} />
-            {/* <div className="text color-main bold size-lg">{getParticipant({participants, id: request.participantId}).name}</div> */}
             <div className="flex center-vertical gap-xs">Feeling <span className="text size-xxxl">{request.emotionalStateEmoji}</span></div>
             <div className="">Want to</div>
             <div className="padding-left-right-sm">

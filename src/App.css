@@ -147,6 +147,7 @@ body {
   border-bottom: 2px dashed var(--grayscale-8);
   border-bottom: 2px solid var(--grayscale-8);
 }
+.pointer { cursor: pointer; }
 .action-element {
   cursor: pointer;
   background-color: var(--pt-palette-main);
