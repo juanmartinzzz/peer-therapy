@@ -3,6 +3,7 @@ import GroupList from "../groups/GroupList";
 import ParticipantList from "../particpants/ParticipantList";
 import { useEffect, useState } from "react";
 import { dataLayer } from "../../data/dataLayer";
+import Button from "../interaction/Button";
 
 const randomlyAssignParticipantsToGroups = ({participants, groups}) => {
   console.log({participants, groups});
@@ -38,7 +39,7 @@ const SessionGroupsAndParticipants = ({session, setGroupToEdit}) => {
 
       {auth.isAdmin() && (
         <div className="flex center">
-          <div className="text size-md action-element padding-left-right-sm" onClick={() => randomlyAssignParticipantsToGroups({participants, groups})}>Randomly assign participants to groups</div>
+          <Button text="Randomly assign participants to groups" onClick={() => randomlyAssignParticipantsToGroups({participants, groups})} />
         </div>
       )}
 

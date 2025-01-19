@@ -21,7 +21,7 @@ const ModalForm = ({children, position = modalFormPositions.bottom, openButtonTe
 
   const CloseButton = ({setIsOpen}) => {
     return (
-      <div className="flex space-between" onClick={() => closeModal({setIsOpen, onClose})}>
+      <div className="flex justify-between" onClick={() => closeModal({setIsOpen, onClose})}>
         <div></div>
         <div className="action-element padding-left-right-sm">x</div>
       </div>
