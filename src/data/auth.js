@@ -1,8 +1,8 @@
 import { userTemplate } from "./entities";
 
 const isAdmin = () => {
-  // If the window location includes /ubq6nqwo4nd7a3infg
-  return window.location.pathname.includes('/ubq6nqwo4nd7a3infg');
+  // If the window location includes the admin hash
+  return window.location.pathname.includes(process.env.REACT_APP_ADMIN_HASH);
 }
 
 const isModerator = () => {

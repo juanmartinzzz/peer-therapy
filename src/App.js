@@ -8,8 +8,8 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 const router = createBrowserRouter([
   { path: '/', element: <Sessions /> },
   { path: '/session/:sessionId', element: <Session /> },
-  { path: '/session/:sessionId/ubq6nqwo4nd7a3infg', element: <Session /> },
-  { path: '/ubq6nqwo4nd7a3infg', element: <Sessions /> },
+  { path: `/session/:sessionId/${process.env.REACT_APP_ADMIN_HASH}`, element: <Session /> },
+  { path: `/${process.env.REACT_APP_ADMIN_HASH}`, element: <Sessions /> },
   { path: '/group/:sessionId/:groupId', element: <Group /> },
 ]);
 
