@@ -16,6 +16,8 @@ const Session = () => {
   useEffect(() => {
     dataLayer.session.onSessionsChange({callback: ({documents}) => {
       setSessions(documents);
+
+      // Find current Session for User
       const session = documents.find(session => session.id === sessionId);
       setSession(session || {});
     }});
@@ -42,7 +44,7 @@ const Session = () => {
     );
   }
 
-  const backAction = auth.isAdmin() ? () => {window.location.href = '/ubq6nqwo4nd7a3infg';} : null;
+  const backAction = auth.isAdmin() ? () => {window.location.href = `/${process.env.REACT_APP_ADMIN_HASH}`;} : null;
 
   return (
     <>

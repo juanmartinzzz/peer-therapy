@@ -1,5 +1,7 @@
 import { cities, groupEmojis, requestStatuses } from "./enums";
 
+
+/* Request */
 const requestTemplate = {
   id: '',
   groupId: '',
@@ -13,19 +15,26 @@ const requestTemplate = {
   status: requestStatuses.editing,
 };
 
+
+/* Group */
 const groupTemplate = {
   id: '',
   name: '',
+  scribeId: '',
   sessionId: '',
   emoji: groupEmojis[Object.keys(groupEmojis)[Math.floor(Math.random() * Object.keys(groupEmojis).length)]],
 };
 
+
+/* Location */
 const locationTemplate = {
   nickname: '',
   city: cities.montreal,
   hostCompanyName: '',
 };
 
+
+/* Session */
 const sessionTemplate = {
   nickname: '',
   date: new Date(),
@@ -33,6 +42,8 @@ const sessionTemplate = {
   location: locationTemplate,
 };
 
+
+/* User */
 const userTemplate = {
   id: '',
   name: '',
@@ -44,7 +55,16 @@ const userTemplate = {
   city: cities.montreal,
 };
 
+const template = {
+  user: userTemplate,
+  group: groupTemplate,
+  session: sessionTemplate,
+  request: requestTemplate,
+  location: locationTemplate,
+};
+
 export {
+  template,
   userTemplate,
   groupTemplate,
   sessionTemplate,
