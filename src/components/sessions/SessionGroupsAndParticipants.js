@@ -1,13 +1,15 @@
 import auth from "../../data/auth";
+import Button from "../interaction/Button";
 import GroupList from "../groups/GroupList";
 import ParticipantList from "../particpants/ParticipantList";
 import { useEffect, useState } from "react";
 import { dataLayer } from "../../data/dataLayer";
-import Button from "../interaction/Button";
 
 const randomlyAssignParticipantsToGroups = ({participants, groups}) => {
-  console.log({participants, groups});
-  const shuffledParticipants = participants.sort(() => 0.5 - Math.random());
+  // Remove participants that are already scribes
+  const scribes = groups.map(group => group.scribeId);
+  // Shuffle participants
+  const shuffledParticipants = participants.filter(participant => !scribes.includes(participant.id)).sort(() => 0.5 - Math.random());
 
   // Divide participants into as many arrays as there are groups
   const assignedParticipants = [];
@@ -35,7 +37,7 @@ const SessionGroupsAndParticipants = ({session, setGroupToEdit}) => {
 
   return (
     <>
-      <GroupList session={session} groups={groups} setGroupToEdit={setGroupToEdit} />
+      <GroupList session={session} groups={groups} setGroupToEdit={setGroupToEdit} participants={participants} />
 
       {auth.isAdmin() && (
         <div className="flex center">

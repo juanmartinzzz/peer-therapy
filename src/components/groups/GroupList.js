@@ -1,5 +1,4 @@
-import auth from "../../data/auth";
-import Button from "../interaction/Button";
+import GroupItem from "./GroupItem";
 import { useState } from "react";
 import { dataLayer } from "../../data/dataLayer";
 
@@ -8,7 +7,7 @@ const deleteGroup = ({group, setGroupToDelete}) => {
   dataLayer.group.deleteGroup({group});
 }
 
-const GroupList = ({groups, setGroupToEdit}) => {
+const GroupList = ({groups, setGroupToEdit, participants}) => {
   const [groupToDelete, setGroupToDelete] = useState(null);
 
   return (
@@ -17,23 +16,7 @@ const GroupList = ({groups, setGroupToEdit}) => {
 
       <div className="padding-top-bottom-sm flex gap-md" style={{overflow: 'scroll'}}>
         {groups.map(group => (
-          <div className="padding-sm border-main rounded-sm background-grayscale-0 flex column justify-between gap-xs" style={{minWidth: 136}} key={group.id}>
-            <span className="text bold size-lg">{group.name}</span>
-
-            <span className="text size-sm">Participants: {group.participantIds ? group.participantIds.length : 0}</span>
-
-            {auth.isAdmin() && <div className="text size-sm color-main bold pointer" onClick={() => {window.location.href = `/group/${group.sessionId}/${group.id}`;}}>Go to this group</div>}
-
-            {(group.participantIds && group.participantIds.includes(auth.getUser().id)) && <div className="text size-sm color-main bold pointer" onClick={() => {window.location.href = `/group/${group.sessionId}/${group.id}`;}}>Go to your group</div>}
-
-            {auth.isAdmin() && (
-              <>
-                <Button text="Edit" onClick={() => setGroupToEdit(group)} />
-                <Button text="Remove" onClick={() => setGroupToDelete(group)} />
-                {groupToDelete?.id === group.id && <Button text="Confirm remove" onClick={() => deleteGroup({group, setGroupToDelete})} />}
-              </>
-            )}
-          </div>
+          <GroupItem group={group} participants={participants} setGroupToEdit={setGroupToEdit} groupToDelete={groupToDelete} setGroupToDelete={setGroupToDelete} deleteGroup={deleteGroup} key={group.id} />
         ))}
       </div>
     </>
