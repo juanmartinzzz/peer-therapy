@@ -111,12 +111,13 @@ body {
 .padding-left-right-md { padding-left: 32px; padding-right: 32px; }
 .padding-left-right-lg { padding-left: 64px; padding-right: 64px; }
 .padding-left-right-xl { padding-left: 128px; padding-right: 128px; }
-.width-xs { width: 8%; }
-.width-sm { width: 16%; }
-.width-md { width: 32%; }
-.width-lg { width: 64%; }
-.width-xl { width: 96%; }
-.width-full { width: 100%; }
+.width-10 { width: 10%; }
+.width-25 { width: 25%; }
+.width-33 { width: 33%; }
+.width-50 { width: 50%; }
+.width-66 { width: 66%; }
+.width-75 { width: 75%; }
+.width-100 { width: 100%; }
 .horizontal-line { border-top: 1px solid var(--grayscale-4); }
 .vertical-line { border-left: 1px solid var(--grayscale-4); }
 .highlight { background-color: rgba(255, 255, 255, 0.3); }
@@ -260,6 +261,9 @@ body {
 
 
 /* typography */
+.text {
+  font-family: 'Poppins', sans-serif;
+}
 .text.bold { font-weight: bold; }
 .text.size-xxxs { font-size: 7px; }
 .text.size-xxs { font-size: 8px; }
