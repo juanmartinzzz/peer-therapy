@@ -1,6 +1,17 @@
 import { cities, groupEmojis, requestStatuses } from "./enums";
 
 
+/* Suggestion */
+const suggestion = {
+  id: '',
+  groupId: '',
+  sessionId: '',
+  requestId: '',
+  title: '',
+  summary: '',
+};
+
+
 /* Request */
 const requestTemplate = {
   id: '',
@@ -56,6 +67,7 @@ const userTemplate = {
 };
 
 const template = {
+  suggestion,
   user: userTemplate,
   group: groupTemplate,
   session: sessionTemplate,

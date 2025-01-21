@@ -1,35 +1,23 @@
+import auth from "../../data/auth";
 import AppBar from "../appbar/AppBar";
-import Role from "../particpants/Role";
+import RequestItem from "../requests/RequestItem";
 import RequestForm2 from "../requests/RequestForm2";
-import { useEffect, useState } from "react";
+import Suggestions from "../suggestions/Suggestions";
 import { useParams } from "react-router-dom";
 import { dataLayer } from "../../data/dataLayer";
-import { thingsToAskForOptions } from "../../data/enums";
-
-const getParticipant = ({participants, id}) => participants.find(participant => participant.id === id) || {};
+import { Fragment, useEffect, useState } from "react";
 
 const Group = () => {
-  const { sessionId, groupId } = useParams();
   const [group, setGroup] = useState({});
+  const { sessionId, groupId } = useParams();
   const [requests, setRequests] = useState([]);
   const [participants, setParticipants] = useState([]);
 
   useEffect(() => {
-    dataLayer.group.onGroupsChange({sessionId, callback: ({documents}) => {
-      setGroup(documents.find(group => group.id === groupId));
-    }});
+    dataLayer.group.onGroupsChange({sessionId, callback: ({documents}) => setGroup(documents.find(group => group.id === groupId))});
     dataLayer.request.onRequestsChange({sessionId, groupId, callback: ({documents}) => setRequests(documents)});
     dataLayer.participant.onParticipantsChange({sessionId, callback: ({documents}) => setParticipants(documents)});
   }, []);
-
-  const ParticipantInfo = ({participant}) => {
-    return (
-      <div>
-        <div className="text size-xl color-main bold">{participant.name}</div>
-        <div><Role participant={participant} /> working in {participant.industry}</div>
-      </div>
-    );
-  }
 
   return (
     <>
@@ -42,26 +30,18 @@ const Group = () => {
         </div>
       </div>
 
-      <div className="padding-sm">
-        <div className="flex center text size-xl">People in our group and their requests</div>
+      <div className="padding-left-right-sm flex column gap-xs">
         {requests.map(request => (
-          <div className="flex column padding-top-bottom-sm gap-xs" key={request.id}>
-            <ParticipantInfo participant={getParticipant({participants, id: request.participantId})} />
-            <div className="flex center-vertical gap-xs">Feeling <span className="text size-xxxl">{request.emotionalStateEmoji}</span></div>
-            <div className="">Want to</div>
-            <div className="padding-left-right-sm">
-              {[...request.thingsAskedForKeys.map(key => thingsToAskForOptions[key]), request.otherThingToAskFor].join(', ').split(', ').map(thing => (
-                <div className="text size-md color-main">{thing}</div>
-              ))}
-            </div>
-            <div className="">For context:</div>
-            <div className="text size-md">{request.context}</div>
-            <div className="horizontal-line"></div>
-          </div>
+          <Fragment key={request.id}>
+            <RequestItem request={request} participants={participants} />
+
+            <Suggestions request={request} />
+          </Fragment>
         ))}
       </div>
 
-      <RequestForm2 sessionId={sessionId} groupId={groupId} />
+      {/* Only show form to share problem with the Group if User is NOT Group's Scribe */}
+      {auth.getUser().id !== group.scribeId && <RequestForm2 sessionId={sessionId} groupId={groupId} />}
     </>
   );
 }

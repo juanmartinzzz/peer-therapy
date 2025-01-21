@@ -1,8 +1,8 @@
 import { db } from "../integrations/firebase";
 import { addDoc, collection, deleteDoc, doc, onSnapshot, query, setDoc } from "firebase/firestore";
 
-// helpers
 
+/* Helpers */
 const setCallbackOnQuerySnapshot = async ({query, callback}) => {
   onSnapshot(query, querySnapshot => {
     const documents = [];
@@ -69,8 +69,21 @@ const addDocumentWithDefaultFields = async ({collectionName, data, id}) => {
   }
 }
 
-// data methods
 
+/* Suggestion */
+const suggestion = {
+  updateSuggestion: async ({suggestion}) => {
+    addOrUpdateDocument({collectionName: `sessions/${suggestion.sessionId}/groups/${suggestion.groupId}/requests/${suggestion.requestId}/suggestions`, data: suggestion, id: suggestion.id});
+  },
+  onSuggestionsChange: async ({sessionId, groupId, requestId, callback}) => {
+    const q = query(collection(db, `sessions/${sessionId}/groups/${groupId}/requests/${requestId}/suggestions`));
+
+    setCallbackOnQuerySnapshot({query: q, callback});
+  }
+}
+
+
+/* Request */
 const request = {
   updateRequest: async ({request}) => {
     console.log({requestToBeUpdated: request});
@@ -94,6 +107,8 @@ const request = {
   }
 }
 
+
+/* Group */
 const group = {
   updateGroup: async ({group}) => {
     if(group.id) {
@@ -120,6 +135,8 @@ const group = {
   }
 }
 
+
+/* Participant */
 const participant = {
   onParticipantsChange: async ({sessionId, callback}) => {
     const q = query(collection(db, `sessions/${sessionId}/participants`));
@@ -132,6 +149,8 @@ const participant = {
   },
 }
 
+
+/* User */
 const user = {
   updateUser: async ({user}) => {
     user.sessions.map(sessionId => {
@@ -145,6 +164,8 @@ const user = {
   }
 }
 
+
+/* Session */
 const session = {
   updateSession: async ({session}) => {
     if(session.id) {
@@ -171,6 +192,7 @@ const dataLayer = {
   group,
   request,
   session,
+  suggestion,
   participant,
 }
 
