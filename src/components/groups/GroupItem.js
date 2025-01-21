@@ -15,7 +15,6 @@ const SelectScribeDropdown = ({group, participants}) => {
 
   return (
     <>
-      <span className="text size-sm">Scribe: {participants.find(participant => participant.id === group.scribeId)?.name}</span>
       <select className="text size-md" onChange={({target}) => updateGroupScribe({group, scribeId: target.value})}>
         <option value="">Select scribe</option>
         {participants.map(participant => (
@@ -43,12 +42,17 @@ const GroupItem = ({group, setGroupToEdit, groupToDelete, setGroupToDelete, dele
 
   return (
     <div className="padding-sm border-main rounded-sm background-grayscale-0 flex column justify-between gap-xs" style={{minWidth: 136}} key={group.id}>
-      <span className="text bold size-lg">{group.name}</span>
+      <div>
+        <div className="text bold size-lg">{group.name}</div>
+        <div className="text size-sm">Scribe: {participants.find(participant => participant.id === group.scribeId)?.name}</div>
+        <SelectScribeDropdown group={group} participants={participants} />
+      </div>
 
-      <span className="text size-sm">Participants ({group.participantIds ? group.participantIds.length : 0})</span>
-      <span className="text size-sm">{participants.filter(participant => group.participantIds.includes(participant.id)).map(participant => participant.name).join(', ')}</span>
+      <div>
+        <div className="text size-sm">{group.participantIds ? group.participantIds.length : 0} participants:</div>
+        <div className="text size-sm">{participants.filter(participant => group.participantIds.includes(participant.id)).map(participant => participant.name).join(', ')}</div>
+      </div>
 
-      <SelectScribeDropdown group={group} participants={participants} />
 
       <GoToGroupButton group={group} navigate={navigate} />
 
