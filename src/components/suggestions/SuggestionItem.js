@@ -37,6 +37,7 @@ const SuggestionItem = ({suggestion}) => {
 
       <div className="background-grayscale-0 padding-sm border-main rounded-xs" style={{flex: 1}}>
       <div className="text size-xxxs">{suggestion.id}</div>
+      <div className="text size-xxxs">{suggestion.updatedAt ? 'UpdatedAt' : 'New'}</div>
         <div className="text size-md">
           <TextInputDynamic size="sm" bold={true} placeholder="Add a new suggestion" value={currentSuggestion.title} onChange={({target}) => {
             setShouldUpdate(true);
